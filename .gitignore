@@ -1,0 +1,4 @@
+*.swp
+download/orig
+download/pages/*.txt
+download/pages/duplicates
