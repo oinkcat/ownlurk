@@ -2,3 +2,7 @@
 download/orig
 download/pages/*.txt
 download/pages/duplicates
+TestApp/bin
+TestApp/obj
+WikiReader/bin
+WikiReader/obj
