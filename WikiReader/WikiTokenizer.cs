@@ -5,63 +5,38 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using TokenType = System.Nullable<System.ValueTuple<WikiToken, System.String>>;
-
-/// <summary>
-/// Токен Wiki-разметки
-/// </summary>
-public enum WikiToken
-{
-    EscapeStart,
-    ObjectStart,
-    ObjectEnd,
-    LinkStart,
-    LinkEnd,
-    ExtLinkStart,
-    ExtLinkEnd,
-    ThreeEqual,
-    TwoEqual,
-    Bar,
-    Star,
-    Quote,
-    Text,
-    NewLine,
-    LineBreak,
-    EndOfFile // ?
-}
-
 /// <summary>
 /// Разбивает текст Wiki-разметки на токены
 /// </summary>
-public class WikiTokenizer : IEnumerator<TokenType>
+public class WikiTokenizer : IEnumerator<TokenInfo>
 {
     private const string EscapeStart = "{{{";
 
     private const string EscapeEnd = "}}}";
 
-    private readonly Dictionary<string, WikiToken> tokensMap = new()
+    private readonly Dictionary<string, TokenType> tokensMap = new()
     {
-        [EscapeStart] = WikiToken.EscapeStart,
-        ["{{"] = WikiToken.ObjectStart,
-        ["}}"] = WikiToken.ObjectEnd,
-        ["[["] = WikiToken.LinkStart,
-        ["]]"] = WikiToken.LinkEnd,
-        ["["] = WikiToken.ExtLinkStart,
-        ["]"] = WikiToken.ExtLinkEnd,
-        ["==="] = WikiToken.ThreeEqual,
-        ["=="] = WikiToken.TwoEqual,
-        ["|"] = WikiToken.Bar,
-        ["*"] = WikiToken.Star,
-        ["'"] = WikiToken.Quote,
-        ["\n"] = WikiToken.NewLine,
-        [@"\\"] = WikiToken.LineBreak
+        [EscapeStart] = TokenType.EscapeStart,
+        ["{{"] = TokenType.ObjectStart,
+        ["}}"] = TokenType.ObjectEnd,
+        ["[["] = TokenType.LinkStart,
+        ["]]"] = TokenType.LinkEnd,
+        ["["] = TokenType.ExtLinkStart,
+        ["]"] = TokenType.ExtLinkEnd,
+        ["==="] = TokenType.ThreeEqual,
+        ["=="] = TokenType.TwoEqual,
+        ["|"] = TokenType.Bar,
+        ["*"] = TokenType.Star,
+        ["'"] = TokenType.Quote,
+        ["\n"] = TokenType.NewLine,
+        [@"\\"] = TokenType.NewLine
     };
 
     const RegexOptions Options = RegexOptions.Compiled |
                                  RegexOptions.Multiline |
                                  RegexOptions.IgnorePatternWhitespace;
                                  
-    public TokenType Current { get; private set; }
+    public TokenInfo Current { get; private set; }
 
     object IEnumerator.Current => Current;
 
@@ -69,21 +44,21 @@ public class WikiTokenizer : IEnumerator<TokenType>
     
     private readonly string textToTokenize;
     
-    private readonly Queue<TokenType> pushedBackTokens;
+    private readonly Queue<TokenInfo> pushedBackTokens;
     
-    private TokenType next;
+    private TokenInfo next;
     
     private int nextMatchIndex;
 
-    private bool isAtStartOfLine;
+    private bool prevAtEol;
     
     public WikiTokenizer(string inputText)
     {
-        pushedBackTokens = new Queue<TokenType>();
+        pushedBackTokens = new Queue<TokenInfo>();
         regex = new Regex(ConstructParseRegexTemplate(), Options);
 
         textToTokenize = inputText;
-        isAtStartOfLine = true;
+        prevAtEol = true;
     }
     
     private string ConstructParseRegexTemplate()
@@ -110,32 +85,34 @@ public class WikiTokenizer : IEnumerator<TokenType>
         }
     
         var newMatch = regex.Match(textToTokenize, nextMatchIndex);
+        TokenType? matchedTokenType = null;
         
         if(newMatch.Success)
         {
             var (i, l) = (newMatch.Index, newMatch.Length);
             string tokenText = textToTokenize.Substring(i, l);
-            var tokenType = tokensMap[tokenText];
+            matchedTokenType = tokensMap[tokenText];
 
-            TokenType matchedTokenInfo;
+            TokenInfo matchedTokenInfo;
 
-            if(tokenType == WikiToken.EscapeStart)
+            if(matchedTokenType == TokenType.EscapeStart)
             {
                 int escapeEndIdx = textToTokenize.IndexOf(EscapeEnd, i);
                 int escLen = EscapeStart.Length;
-                int tokenEndIdx = escapeEndIdx + escLen;
-                matchedTokenInfo = (WikiToken.Text, textToTokenize[(i + escLen) .. tokenEndIdx]);
+
+                string escapedText = textToTokenize[(i + escLen) .. escapeEndIdx];
+                matchedTokenInfo = new TokenInfo(escapedText, prevAtEol);
 
                 l = escapeEndIdx - i + 1;
             }
             else
             {
-                matchedTokenInfo = (tokensMap[tokenText], tokenText);
+                matchedTokenInfo = new TokenInfo(tokensMap[tokenText], tokenText, prevAtEol);
             }
 
             if (TryExtractPossibleTextMatch(nextMatchIndex, i, out string text))
             {
-                Current = (WikiToken.Text, text);
+                Current = new TokenInfo(text, prevAtEol);
                 next = matchedTokenInfo;
             }
             else
@@ -148,13 +125,13 @@ public class WikiTokenizer : IEnumerator<TokenType>
         else
         {    
             Current = (TryExtractPossibleTextMatch(nextMatchIndex, textToTokenize.Length, out string rest))
-                ? (WikiToken.Text, rest)
+                ? new TokenInfo(rest, prevAtEol)
                 : null;
                 
             nextMatchIndex = textToTokenize.Length;
         }
 
-        isAtStartOfLine = Current?.Item1 == WikiToken.NewLine;
+        prevAtEol = matchedTokenType == TokenType.NewLine;
         
         return Current != null;
     }
@@ -167,7 +144,7 @@ public class WikiTokenizer : IEnumerator<TokenType>
             next = null;
             return true;
         }
-        else if(pushedBackTokens.TryDequeue(out TokenType pushedBackItem))
+        else if(pushedBackTokens.TryDequeue(out TokenInfo pushedBackItem))
         {
             Current = pushedBackItem;
             return true;
@@ -200,7 +177,7 @@ public class WikiTokenizer : IEnumerator<TokenType>
     /// Поместить токен обратно в очередь
     /// </summary>
     /// <param name="token">Токен для помещения в очередь</param>
-    public void PushBack(TokenType token = null)
+    public void PushBack(TokenInfo token = null)
     {
         pushedBackTokens.Enqueue(token != null ? token : Current);
     }
@@ -212,5 +189,5 @@ public class WikiTokenizer : IEnumerator<TokenType>
         // ...
     }
     
-    public IEnumerator<TokenType> GetEnumerator() => this;
+    public IEnumerator<TokenInfo> GetEnumerator() => this;
 }

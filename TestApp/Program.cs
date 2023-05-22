@@ -2,31 +2,32 @@
 using System.IO;
 using System.Text;
 using WikiReader;
+using WikiReader.Dom;
 
 const string TestDataDir = @"../data";
 const string TestDataPath = @$"{TestDataDir}/test_wiki.txt";
 const string TestOutFile = @$"{TestDataDir}/test_text.txt";
 
+using var outWriter = new StreamWriter(TestOutFile);
+
 string testArticleText = File.ReadAllText(TestDataPath);
 
-using var outWriter = new StreamWriter(TestOutFile);
+var wikiPageParser = new WikiParser(testArticleText);
+wikiPageParser.Parse();
 
 var textBuffer = new StringBuilder();
 
-foreach(var tokenInfo in new WikiTokenizer(testArticleText))
+foreach(var element in wikiPageParser.ParsedDocument.Contents)
 {
-    var (token, value) = tokenInfo.Value;
-    Console.WriteLine($"{token}: {value}");
+    Console.WriteLine(element);
 
-    if(token == WikiToken.Text)
+    if(element is WikiTextElement textElem)
     {
-        textBuffer.Append(value);
+        textBuffer.Append(textElem.Text);
     }
-    else if(token == WikiToken.NewLine)
+    else if(element is WikiEolElement)
     {
         outWriter.WriteLine(textBuffer.ToString());
         textBuffer.Clear();
     }
 }
-
-outWriter.Write(textBuffer.ToString());
