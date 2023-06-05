@@ -1,0 +1,919 @@
+Text: ** __NOTOC__
+NewLine: **
+
+NewLine: **
+
+ObjectStart: ** {{
+Text: about
+Bar: |
+Text: о сетевом форсед-меме
+Bar: |
+Text: о бывшем нанопрезиденте России
+Bar: |
+Text: Медведев
+ObjectEnd: }}
+NewLine:
+
+ObjectStart: ** {{
+Text: архив
+ObjectEnd: }}
+NewLine:
+
+NewLine: **
+
+LinkStart: ** [[
+Text: Файл:Bear surprise.jpg
+Bar: |
+Text: thumb
+Bar: |
+Text: Оригинальная картина Джона Лурье
+LinkEnd: ]]
+NewLine:
+
+NewLine: **
+
+Quote: ** '
+Quote: '
+Quote: '
+Text: Медвед
+Quote: '
+Quote: '
+Quote: '
+Text:  (от
+Quote: '
+Quote: '
+Text: медведь
+Quote: '
+Quote: '
+Text: ) — <del>заебавший всех</del> некогда широко распространенный в Рунете
+LinkStart: [[
+Text: мем
+LinkEnd: ]]
+Text: .
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  Происхождение
+TwoEqual: ==
+NewLine:
+
+Text: ** Этот мем связан с акварельным рисунком
+LinkStart: ** [[
+Text: США
+Bar: |
+Text: американского
+LinkEnd: ]]
+Text:  актёра и джаз-композитора
+LinkStart: [[
+Text: :w:Джон Лурье
+Bar: |
+Text: Джона Лурье
+LinkEnd: ]]
+Text: . По сюжету этого рисунка медведь застаёт на поляне парочку, занимающуюся
+LinkStart: [[
+Text: секс
+LinkEnd: ]]
+Text: ом в коленно-локтевой позе, и говорит им «Surprise!», поднимая лапы вверх.
+NewLine:
+
+NewLine: **
+
+Text: ** Русская версия появилась на
+LinkStart: ** [[
+Text: лепра
+Bar: |
+Text: лепре
+LinkEnd: ]]
+Text:  в феврале 2006 года: пользователь
+ExtLinkStart: [
+Text: http://www.lobzz.com Lobzz
+ExtLinkEnd: ]
+Text:  написал пост про внезапного медведя и приложил к нему картинку, на которой «surprise» заменил на «превед», после чего, собственно, все и началось.
+NewLine:
+
+NewLine: **
+
+Text: ** Превед оказался фантастическим по своей вирулентности
+LinkStart: ** [[
+Text: медиавирус
+LinkEnd: ]]
+Text: ом, в рекордно короткие сроки заполонившим интернеты и, частично, оффлайн. С некоторых пор за употребление «преведа» на лепре безжалостно банят.
+NewLine:
+
+NewLine: **
+
+Text: ** Исторически явление Медведа — точка отсчета, с которой начинается история отечественных мемов.
+NewLine: **
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  Оффлайн
+TwoEqual: ==
+NewLine:
+
+LinkStart: ** [[
+Text: Файл:OSMP Preved1.jpg
+Bar: |
+Text: thumb
+Bar: |
+Text: Медвед на автомате оплаты услуг, первый вариант
+LinkEnd: ]]
+NewLine:
+
+ObjectStart: ** {{
+Text: Video
+Bar: |
+Text: 5vVjr7Wrjv8
+Bar: |
+Text: width=180
+Bar: |
+Text: А еще есть вот такая песенка про медведа
+ObjectEnd: }}
+NewLine:
+
+NewLine: **
+
+Star: ** *
+Text:  На протяжении примерно года жителей вводил в ступор медвед, появлявшийся при нажатии на букву «М» в слове «Информация» на автоматах ОСМП. После нескольких (не слишком успешных) трансформаций медвед исчез с экранов в 2008 году, а потом снова вернулся (в новогоднем оформлении выскакивал из мешка деда Мороза, если на этот мешок несколько раз нажать).<br />Его до сих пор можно увидеть на автоматах Qiwi, которые появились в результате ребрендинга ОСМП. Но остался он только в неработающей версии данного аппарата, когда на ней находится подобие настроечной таблицы телевизора и надпись «Не работает». Для вызова медведа необходимо потыкать пальцами рук в любое место экрана.
+NewLine:
+
+Star: ** *
+Text:  Существует
+ExtLinkStart: [
+Text: http://io.ua/9652546p деревянная фигура медведа
+ExtLinkEnd: ]
+Text:  в украинских Карпатах. Также его штамповали на болванках фирмы OXION, где медвед произносил фразу «Превед, шо будем жжечь?»
+NewLine:
+
+Star: ** *
+Text:  Медвед — распространенное прозвище Дмитрия Медведева. А в связи с его приходом на пост президента Российской Федерации родилась фраза «Превед, Дмитрий Медвед», которую часто можно увидеть на заборах, стенах, партах, в
+LinkStart: [[
+Text: IRC
+Bar: |
+Text: ирке
+LinkEnd: ]]
+Text: , флудзонах и т. п.
+NewLine:
+
+Star: ** *
+Text:  Вполне себе культурная контора ABBYY выпустила сленговую версию своего переводчика Lingvo, назвав ее «
+ExtLinkStart: [
+Text: http://www.abbyy.ru/business/lingvo-windows/medved_edition/ ME (Medved Edition)
+ExtLinkEnd: ]
+Text: ».
+NewLine:
+
+Star: ** *
+Text:  C 2008-го года в городе авиации Жуковском, что недалеко от Москвы, функционирует организация по доставке пиццы «Пицца-Превед».
+NewLine:
+
+Star: ** *
+Text:  Существует настольная игра «Медвед». Главный её элемент, как ни странно, называется преведом.
+NewLine:
+
+Star: ** *
+Text:  В серии Umanetto (мульт + игра) встречается Медвед, а герои мульта неоднократно повторяют фразу «Превед!».
+NewLine:
+
+Star: ** *
+Text:  Одно время в 12-гондонной пачке Contex можно было найти
+LinkStart: [[
+Text: Media:Contexpreved.jpg
+Bar: |
+Text: такой артефакт
+LinkEnd: ]]
+Text: .
+NewLine:
+
+Star: ** *
+Text:  В
+LinkStart: [[
+Text: США
+LinkEnd: ]]
+Text:  гнездится человек по имени
+LinkStart: [[
+Text: :en.w:Michael Medved
+Bar: |
+Text: Майкл Медвед
+LinkEnd: ]]
+Text: , который одобряет
+ExtLinkStart: [
+Text: http://lenta.ru/news/2005/09/18/penguin марш пингвинов
+ExtLinkEnd: ]
+Text: , но критикует
+LinkStart: [[
+Text: Beavis and Butt-head
+Bar: |
+Text: Бивиса с Баттхедом
+LinkEnd: ]]
+Text:  и
+ExtLinkStart: [
+Text: http://lenta.ru/news/2010/06/02/jc мультик об Иисусе
+ExtLinkEnd: ]
+Text: . Кстати, в сериале, в эпизоде s3e17, когда медведь хватает Дриссена, Баттхед восклицает «превед, медвед». Феноменально, что перевод Чонишвили был осуществлен в 1999 году.
+LinkStart: [[
+Text: TIME PARADOX
+Bar: |
+Text: Однако.
+LinkEnd: ]]
+NewLine:
+
+Star: ** *
+Text:  Есть отечественный бренд «Medved» (автопокрышки), принадлежащий Ярославскому шинзаводу.
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  Онлайн
+TwoEqual: ==
+NewLine:
+
+NewLine: **
+
+ObjectStart: ** {{
+Text: Цитата
+Bar: |
+Text: В
+LinkStart: [[
+Text: БАК
+Bar: |
+Text: ЦЕРНе
+LinkEnd: ]]
+Text:  операторы, которые управляют девайсами ускорителя при помощи LabVIEW, даже не подозревают, что в начале сессии клиент шлет прошитой железяке запрос «PREVED» и ожидает ответа. Сервак обучен отвечать «MEDVED». Только после этого открывается сессия.
+Bar: |
+ObjectStart: {{
+Text: Lj user
+Bar: |
+Text: eurolexa
+Bar: |
+Bar: |
+Text: 10459
+ObjectEnd: }}
+ObjectEnd: }}
+NewLine:
+
+NewLine: **
+
+Star: ** *
+Text:  В онлайне в обиход вошел смайлик, стилизованно изображающий картину — «Гг^Y». Получили распространение варианты «j-n’Y» и «\Ö/».
+NewLine:
+
+Star: ** *
+Text:  В ММОРПГ
+LinkStart: [[
+Text: Аллоды Онлайн
+LinkEnd: ]]
+Text:  в чате есть команда \preved или \превед. При ее вводе перс поднимает руки вверх и говорит «ПРЕЕЕВЕЕЕЕД». Видать, таким образом разработчики решили отдать дань уважения великому внезапному медведу.
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  МЕжрегиональное ДВижение ЕДинство
+TwoEqual: ==
+NewLine:
+
+NewLine: **
+
+Text: ** Некоторое время
+LinkStart: ** [[
+Text: Педивикия
+LinkEnd: ]]
+Text:  считала, что:
+NewLine:
+
+NewLine: **
+
+ObjectStart: ** {{
+Text: Цитата
+Bar: |
+Quote: '
+Quote: '
+Quote: '
+Text: МЕДВЕД
+Quote: '
+Quote: '
+Quote: '
+Text:  является официальным сокращением названия «
+Quote: '
+Quote: '
+Quote: '
+Text: Ме
+Quote: '
+Quote: '
+Quote: '
+Text: жрегиональное
+Quote: '
+Quote: '
+Quote: '
+Text: Дв
+Quote: '
+Quote: '
+Quote: '
+Text: ижение
+Quote: '
+Quote: '
+Quote: '
+Text: Ед
+Quote: '
+Quote: '
+Quote: '
+Text: инство» &nbsp;— проправительственного движения, сформировавшего фракцию в Государственной Думе 3 созыва 1999—2002 гг., задолго до появления интернет-мема. На логотипе движения был изображён медведь.
+Bar: |
+Text: 2=
+ExtLinkStart: [
+Text: http://ru.wikipedia.org/w/index.php?title=Медвед&oldid=7692585
+ExtLinkEnd: ]
+ObjectEnd: }}
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  Форманчук
+TwoEqual: ==
+NewLine:
+
+NewLine: **
+
+Text: ** МЕДВЕДом (он же medved01) именуют Кирилла Форманчука, правозащитника, воюющего с
+LinkStart: ** [[
+Text: ГИБДД
+LinkEnd: ]]
+Text:  Екатеринбурга, также известного как
+ExtLinkStart: [
+Text: https://cdn.jpg.wtf/futurico/67/89/1559655200-678974e5e15631a91aae2f7e3ffaeb11.jpeg «слово 1»
+ExtLinkEnd: ]
+Text: .
+NewLine:
+
+NewLine: **
+
+Text: ** В 2006—2008 гг. в Екатеринбурге происходили разборки между гибддэшниками и водителем Кириллом Форманчуком, установившим на свой Лэнд Ровер на официальное место для номера надпись МЕДВЕД01 и
+LinkStart: ** [[
+Text: Синее ведёрко
+Bar: |
+Text: пластмассовую имитацию «мигалок»
+LinkEnd: ]]
+Text:  на крышу. Несмотря на один из признаков
+LinkStart: [[
+Text: ара-тюнинг
+LinkEnd: ]]
+Text: а, водила ездил с вполне официальными транзитными номерами. Ментам, видимо, очень не нравилось такое проявление
+LinkStart: [[
+Text: VIP
+Bar: |
+Text: индивидуальности
+LinkEnd: ]]
+Text: , из-за чего они продолжительное время доёбывались до него.
+NewLine:
+
+NewLine: **
+
+Text: ** МЕДВЕД-Форманчук отвечал тем, что писал заявления в адрес вышестоящих инстанций о том, как местные «гиббоны», и особенно их начальники, занимаются блядством. В результате этого один из местных начальников был-таки вынужден содрать глухую тонировку со служебной Ауди А-6, а чуть позже Форманчука под надуманным предлогом доставили из ГАИ в военкомат, а оттуда — в ОВД и там, поместив в КПЗ, избили до полусмерти. Спасло только наличие друзей, настойчиво требовавших предъявить «Медведа», а то бы фраер, затоптанный в камере «специально обученными» гоблинами, так и помер бы возле параши от полученных травм.
+NewLine: **
+
+NewLine: **
+
+Text: ** Форманчук активно троллил местных гибддшников и выкладывал заснятое у себя на
+ExtLinkStart: ** [
+Text: http://www.medved01.ru сайте
+ExtLinkEnd: ]
+Text: . Сейчас уже не торт (вступил в Общероссийский народный фронт и стал активно лизать режиму), но ранее отснятый материал доставляет немало лулзов.
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  #ДедМедвед
+TwoEqual: ==
+NewLine:
+
+ObjectStart: ** {{
+Text: Video
+Bar: |
+Text: zFG8pU6SD3A
+Bar: |
+Text: width=180
+Bar: |
+Text: Сабж верхом на мотоцикле.
+ObjectEnd: }}
+NewLine:
+
+Text: ** ДедМедвед — довольно унылый барнаульский форсед мем, активно продвигавшийся администрацией города как «тот самый медведь из легенд Барнаула». Был создан в начале 2017 для пиара туристического кластера и форсился в различных барнаульских ивентах, но, как и всегда,
+LinkStart: ** [[
+Text: Всем похуй
+Bar: |
+Text: всем было все равно.
+LinkEnd: ]]
+Text:  Тогда в сентябре 2017 года администрация выпустила целый клип стоимостью в миллион убитых енотов и продолжила форсить его через все доступные СМИ. В итоге получили аж 14к просмотров за 3 месяца — закономерный
+LinkStart: [[
+Text: fail
+LinkEnd: ]]
+Text: , впрочем, ничего удивительного для местечкового форсед мема.
+NewLine:
+
+NewLine: **
+
+Text: ** Сам же клип оказался довольно неплохим и даже может доставить, хоть и открыто косит под творчество
+LinkStart: ** [[
+Text: Драм-энд-бэйс
+Bar: |
+Text: Нейромонаха Феофана
+LinkEnd: ]]
+Text:  и содержит в себе клюкву с рэпчиком и танцами.
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  Внезапно, в 2020
+TwoEqual: ==
+NewLine:
+
+LinkStart: ** [[
+Text: Файл:Bonjourbear.jpg
+Bar: |
+Text: thumb
+Bar: |
+Text: Bonjour!
+LinkEnd: ]]
+NewLine:
+
+Text: ** Bonjour! Начиная с лета 2020, во всем мире неожиданно стало популярным
+ExtLinkStart: ** [
+Text: https://knowyourmeme.com/memes/bonjour-bear фото белого медведа
+ExtLinkEnd: ]
+Text: , который высовывается из норы в снегу и как бы говорит «Bonjour!» Смысл мема в пояснениях не нуждается. Внезапные медведы снова в тренде. Просили вернуть вам ваш 2007?
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  Алсо
+TwoEqual: ==
+NewLine:
+
+Star: ** *
+Text:  Однажды в
+Text: эпичной интернет-конференции [[Путен]]у задали вопрос: «Превед, Владимир Владимирович, как вы относитесь к медведу?»
+ObjectEnd: }}
+Text: . Путен ответил не словом, а делом, и через несколько лет Медвед стал новым президентом
+LinkStart: [[
+Text: Эта страна
+Bar: |
+Text: этой страны
+LinkEnd: ]]
+Text: .
+NewLine:
+
+Star: ** *
+Text:  В книге белорусской писательницы Ольги Громыко «Цветок Камалейника» медвед фигурирует как «сказочный зверь, один из любимцев Тваребога, покровительствующий блуду».
+NewLine:
+
+Star: ** *
+Text:  В фильме Edge аж 1997 года Алек Болдуин невозбранно косплеит медведя и таки да, поднимает лапы и говорит «Surprise».
+NewLine:
+
+Star: ** *
+Text:  В черновиках Толкина фигурирует персонаж по имени Medwed. В книге он получил имя Беорн.
+NewLine:
+
+Star: ** *
+Text:  В винрарном шутере для Nintendo Switch под названием Splatoon 2 одна из карт в нашей локализации называется «Спортзал „Кревед!“»
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  Стихи
+TwoEqual: ==
+NewLine:
+
+ObjectStart: ** {{
+Text: NSFW
+Bar: |
+Text: 1=Под катом
+Bar: |
+Text: 2=<nowiki></nowiki>
+NewLine:
+
+ObjectStart: ** {{
+Text: Цитата
+Bar: |
+Text: pre=1
+Bar: |
+Text: Всех тех, кто с подругой, изящной, упругой
+NewLine:
+
+Text: ** и выбритой в разных местах
+NewLine: **
+
+Text: ** мечтает нажраться и сексом заняться,
+NewLine: **
+
+Text: ** терзает неведомый страх:
+NewLine: **
+
+Text: ** что коль они в мае, от страсти сгорая,
+NewLine: **
+
+Text: ** в лесу остановят
+LinkStart: ** [[
+Text: мопед
+LinkEnd: ]]
+Text: ,
+NewLine:
+
+Text: ** в пылу наслажденья от совокупленья
+NewLine: **
+
+Text: ** найдет их весёлый МЕДВЕД,
+NewLine: **
+
+Text: ** и к парню-падонку, который девчонку
+NewLine: **
+
+Text: ** терзает, как иву пила,
+NewLine: **
+
+Text: ** шагнет косолапо, похлопает лапой
+NewLine: **
+
+Text: ** и спросит: «
+LinkStart: ** [[
+Text: Кагдила?
+Bar: |
+Text: ПРЕВЕД! КАГДИЛА
+LinkEnd: ]]
+Text: ?»
+Bar: |
+ObjectEnd: }}
+NewLine:
+
+NewLine: **
+
+ObjectStart: ** {{
+Text: Цитата
+Bar: |
+Text: pre=1
+Bar: |
+Text: Я пришёл к тебе с преведом,
+NewLine:
+
+Text: ** Не раскашивай ебало.
+NewLine: **
+
+Text: ** Видел я в лесу медведа,
+NewLine: **
+
+Text: ** Сразу весело мне стало.
+NewLine: **
+
+Text: ** Гром гремел, кусты тряслись,
+NewLine: **
+
+Text: ** И медвед в них притаился.
+NewLine: **
+
+Text: ** И на то, как там еблись,
+NewLine: **
+
+Text: ** Этот дурень засмотрелся.
+NewLine: **
+
+Text: ** И не выдержал медвед,
+NewLine: **
+
+Text: ** Из кустов тогда он вылез,
+NewLine: **
+
+Text: ** Закричал вовсю: «ПРЕВЕД!»
+NewLine: **
+
+Text: ** И те люди сразу смылись.
+NewLine: **
+
+Text: ** Вот же падла, вот же сука!
+NewLine: **
+
+Text: ** Людям сильно помешал.
+NewLine: **
+
+Text: ** Ну а я ему от скуки
+NewLine: **
+
+Text: ** По ебалу настучал.
+ObjectEnd: ** }}
+NewLine:
+
+NewLine: **
+
+ObjectStart: ** {{
+Text: Цитата
+Bar: |
+Text: pre=1
+Bar: |
+Text: Once upon a sunny morning, while I fucked, so hot and horny,
+NewLine:
+
+Text: ** Beautiful Lenore, my girlfriend — on the forest grass — our bed,
+NewLine: **
+
+Text: ** As i thrust her from the rear, suddenly there came a bear
+NewLine: **
+
+Text: ** And my heart was filled with fear of the furious Medved!
+NewLine: **
+
+Text: ** His enormous paws he lifted as his way to us he led -
+NewLine: **
+
+Text: ** And produсed a roar: «Preved!»
+NewLine: **
+
+Text: ** And still stands he on the painting, next to myself, nearly fainting,
+NewLine: **
+
+Text: ** On that evil, ghastly image people of the net adore.
+NewLine: **
+
+Text: ** And in offices and classes they keep laughing off their asses
+NewLine: **
+
+Text: ** As the wild «Preved!» tresspases in the heart of my Lenore…
+NewLine: **
+
+Text: ** And my dick — thanks to the bear and to his so fearsome roar —
+NewLine: **
+
+Text: ** Shall be lifted — Nevermore!
+Bar: ** |
+LinkStart: [[
+Text: Эдгар Аллан По
+LinkEnd: ]]
+ObjectEnd: }}
+NewLine:
+
+ObjectEnd: ** }}
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  Галерея
+TwoEqual: ==
+NewLine:
+
+ObjectStart: ** {{
+Text: Галерея
+Bar: |
+Bar: |
+Text: center
+Bar: |
+Text: <gallery widths="180px" perrow="4">
+NewLine:
+
+Text: ** Файл:InuYasha_preved1.jpg
+Bar: ** |
+Text: Классический пример одной из наводнивших
+LinkStart: [[
+Text: интернеты
+LinkEnd: ]]
+LinkStart: [[
+Text: фотожаба
+Bar: |
+Text: фотожаб
+LinkEnd: ]]
+Text: .
+NewLine:
+
+Text: ** Файл:F05026e22d66e5c33ff2c089e074b201.jpg
+Bar: ** |
+Text: Как всё было
+LinkStart: [[
+Text: на самом деле
+LinkEnd: ]]
+Text: .
+NewLine:
+
+Text: ** Файл:Preved.jpg
+Bar: ** |
+Text: Косплей
+NewLine:
+
+Text: ** Файл:Medved br.jpg
+Bar: ** |
+Text: Медвед выходит за рамки киберпространства.
+NewLine:
+
+Text: ** Файл:Medvedqg7.jpg
+Bar: ** |
+Text: Медицинский центр «Медвед».
+NewLine:
+
+Text: ** Файл:Medved korea.jpg
+Bar: ** |
+Text: Расовый северокорейский вариант от
+LinkStart: [[
+Text: Артемий Лебедев
+Bar: |
+Text: Тёмы
+LinkEnd: ]]
+Text: .
+NewLine:
+
+Text: ** Файл:Preved2.jpg
+Bar: ** |
+Text: Номерной знак медведа, вид спереди.
+NewLine:
+
+Text: ** Файл:Preved1.jpg
+Bar: ** |
+Text: Номерной знак медведа, вид сзади.
+NewLine:
+
+Text: ** Файл:Blame Rozen Preved.jpeg
+Bar: ** |
+Text: Цутому мощно укоренился в этой стране.
+NewLine:
+
+Text: ** Файл:Arctic_nazi.jpg
+Bar: ** |
+ExtLinkStart: [
+Text: http://img27.imageshack.us/img27/1516/2254206medved.gif SS-Eisbär
+ExtLinkEnd: ]
+NewLine:
+
+Text: ** Файл:3_medveda.jpg
+Bar: ** |
+LinkStart: [[
+Text: Олбанский
+Bar: |
+Text: Олбанская
+LinkEnd: ]]
+Text:  народная сказка.
+NewLine:
+
+Text: ** Файл:Trotsky preved.png
+Bar: ** |
+LinkStart: [[
+Text: Лев Троцкий
+Bar: |
+Text: Реальный прототип
+LinkEnd: ]]
+Text: .
+NewLine:
+
+Text: ** Файл:100238 700b v1.jpg
+NewLine: **
+
+Text: ** Файл:Rufssia.jpg
+Bar: ** |
+LinkStart: [[
+Text: Клюква
+Bar: |
+Text: Клюквенный
+LinkEnd: ]]
+Text:  превед
+NewLine:
+
+Text: ** Файл:St Preved.jpg
+Bar: ** |
+Text: И сказал
+LinkStart: [[
+Text: Б-г
+Bar: |
+Text: он
+LinkEnd: ]]
+Text:  Слово. <br /> И было это слово: «Превед!»
+NewLine:
+
+Text: ** </gallery>
+ObjectEnd: ** }}
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  См. также
+TwoEqual: ==
+NewLine:
+
+Star: ** *
+LinkStart: [[
+Text: ПрЮвет
+LinkEnd: ]]
+NewLine:
+
+Star: ** *
+LinkStart: [[
+Text: Кагдила?
+LinkEnd: ]]
+NewLine:
+
+Star: ** *
+LinkStart: [[
+Text: ВНЕЗАПНО!
+LinkEnd: ]]
+NewLine:
+
+Star: ** *
+LinkStart: [[
+Text: Педомедведь
+LinkEnd: ]]
+NewLine:
+
+Star: ** *
+LinkStart: [[
+Text: Арт-группа «Война»#Ебись за наследника Медвежонка!
+Bar: |
+Text: Ебись за наследника медвежонка!
+LinkEnd: ]]
+NewLine:
+
+Star: ** *
+LinkStart: [[
+Text: Медведь и шлюха
+LinkEnd: ]]
+NewLine:
+
+NewLine: **
+
+TwoEqual: ** ==
+Text:  Ссылки
+TwoEqual: ==
+NewLine:
+
+NewLine: **
+
+Star: ** *
+ExtLinkStart: [
+Text: http://community.livejournal.com/ru_preved/ ЖЖ-комьюнити, посвященное медведу и преведу
+ExtLinkEnd: ]
+NewLine:
+
+Star: ** *
+ExtLinkStart: [
+Text: http://www.rusrep.ru/2008/29/interview_kirill_formanchuk/ История уральского медведа
+ExtLinkEnd: ]
+NewLine:
+
+Star: ** *
+ExtLinkStart: [
+Text: http://z0r.de/1436 Флэшка про медведа, оснащённая озвучкой на любые вкусы
+ExtLinkEnd: ]
+NewLine:
+
+Star: ** *
+ExtLinkStart: [
+Text: http://gerb.com.ua/preved Брелок «Медвед»
+ExtLinkEnd: ]
+NewLine:
+
+NewLine: **
+
+NewLine: **
+
+ObjectStart: ** {{
+Text: Лепра
+Bar: |
+Text: Мемы Лепры
+ObjectEnd: }}
+NewLine:
+
+ObjectStart: ** {{
+Text: Животные
+ObjectEnd: }}
+NewLine:
+
+ObjectStart: ** {{
+Text: Фотожабы
+Bar: |
+Bar: |
+Text: он
+ObjectEnd: }}
+NewLine:
+
+NewLine: **
+
+LinkStart: ** [[
+Text: w:Медвед
+LinkEnd: ]]
+NewLine:
+
+LinkStart: ** [[
+Text: ae:Preved
+LinkEnd: ]]
+NewLine:
+
+LinkStart: ** [[
+Text: kym:preved-medved
+LinkEnd: ]]
+NewLine:
+
+

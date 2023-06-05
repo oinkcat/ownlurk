@@ -38,7 +38,7 @@ public class WikiParser
         while(tokenizer.MoveNext())
         {
             var parsedElement = ParseGenericElement();
-            ParsedDocument.AppendContent(parsedElement);
+            (ParsedDocument as IWikiContentElement).AppendContent(parsedElement);
         }
     }
 
@@ -46,17 +46,25 @@ public class WikiParser
     {
         var token = tokenizer.Current;
 
-        if(tokenizer.Current.IsText)
+        if(token.IsText)
         {
-            return new WikiTextElement(token.text);
+            return new WikiTextElement(token.Text);
         }
-        else if(token.Type == TokenType.LinkStart)
+        else if(token.IsLinkStart)
         {
-            return ParseLinkElement();
+            return ParseLinkElement(token.Type == TokenType.ExtLinkStart);
+        }
+        else if(token.IsFormatting)
+        {
+            return ParseFormattedElement(token.Type == TokenType.Emphasis);
         }
         else if(token.Type == TokenType.NewLine)
         {
             return new WikiEolElement();
+        }
+        else if(token.AtStartOfLine && (token.Type == TokenType.TwoEqual))
+        {
+            return ParseHeaderElement(token.Text.Length);
         }
         else
         {
@@ -64,7 +72,7 @@ public class WikiParser
         }
     }
 
-    private WikiLinkElement ParseLinkElement()
+    private WikiLinkElement ParseLinkElement(bool isExternal)
     {
         tokenizer.MoveNext();
 
@@ -72,20 +80,12 @@ public class WikiParser
         {
             var linkElem = new WikiLinkElement
             {
-                Uri = new WikiTextElement(tokenizer.Current.Text)
+                Uri = new WikiTextElement(tokenizer.Current.Text),
+                IsExternal = isExternal
             };
 
-            while(tokenizer.Current.Type != TokenType.LinkEnd)
-            {
-                tokenizer.MoveNext();
-
-                var linkContentElem = ParseGenericElement();
-
-                if(linkContentElem != null)
-                {
-                    linkElem.Content.Add(linkContentElem);
-                }
-            }
+            var expectedEndToken = isExternal ? TokenType.ExtLinkEnd : TokenType.LinkEnd;
+            AppendContentUntilEndToken(linkElem, expectedEndToken);
 
             return linkElem;
         }
@@ -93,5 +93,35 @@ public class WikiParser
         {
             return null;
         }
+    }
+
+    private void AppendContentUntilEndToken(IWikiContentElement element, TokenType endToken)
+    {       
+        while(tokenizer.Current.Type != endToken)
+        {
+            tokenizer.MoveNext();
+            element.AppendContent(ParseGenericElement());
+        }
+    }
+
+    private WikiFormattedElement ParseFormattedElement(bool isBold)
+    {
+        var formattedElem = new WikiFormattedElement
+        {
+            Type = isBold ? FormattingType.Bold : FormattingType.Italic
+        };
+
+        var expectedEndToken = isBold ? TokenType.Emphasis : TokenType.LittleEmphasis;
+        AppendContentUntilEndToken(formattedElem, expectedEndToken);
+
+        return formattedElem;
+    }
+
+    private WikiHeaderElement ParseHeaderElement(int level)
+    {
+        var headerElem = new WikiHeaderElement { Level = level };
+        AppendContentUntilEndToken(headerElem, TokenType.NewLine);
+
+        return headerElem;
     }
 }

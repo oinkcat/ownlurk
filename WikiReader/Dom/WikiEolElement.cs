@@ -10,5 +10,8 @@ namespace WikiReader.Dom;
 /// </summary>
 public class WikiEolElement : WikiElement
 {
-    // ?
+    public override void AcceptHtmlGenerationVisitor(HtmlGenerationVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
 }

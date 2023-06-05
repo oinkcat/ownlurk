@@ -6,33 +6,31 @@ using System.Threading.Tasks;
 namespace WikiReader.Dom;
 
 /// <summary>
-/// Элемент ссылки
+/// Тип форматирования
 /// </summary>
-public class WikiLinkElement : WikiElement, IWikiContentElement
+public enum FormattingType
 {
-    /// <summary>
-    /// Идентификатор ресурса
-    /// </summary>
-    public WikiTextElement Uri { get; set; }
+    Bold,
+    Italic
+}
 
+/// <summary>
+/// Элемент форматированного текста
+/// </summary>
+public class WikiFormattedElement : WikiElement, IWikiContentElement
+{
     /// <summary>
     /// Отображаемое содержимое
     /// </summary>
     public List<WikiElement> Content { get; } = new();
 
     /// <summary>
-    /// Внешняя ссылка
+    /// Тип форматирования
     /// </summary>
-    public bool IsExternal { get; set; }
+    public FormattingType Type { get; set; }
 
     public override void AcceptHtmlGenerationVisitor(HtmlGenerationVisitor visitor)
     {
         visitor.Visit(this);
-    }
-
-    public override string ToString()
-    {
-        string prefix = IsExternal ? "ext:" : String.Empty;
-        return $"{prefix}{Uri.Text}";
     }
 }

@@ -21,7 +21,8 @@ public enum TokenType
     TwoEqual,
     Bar,
     Star,
-    Quote,
+    Emphasis,
+    LittleEmphasis,
     Text,
     NewLine,
     EndOfFile // ?
@@ -30,19 +31,32 @@ public enum TokenType
 /// <summary>
 /// Информация о токене Wiki-разметки
 /// </summary>
-public record TokenInfo(string text, bool atStart = false)
+public record TokenInfo(string Text, bool AtStartOfLine = false)
 {
+    /// <summary>
+    /// Тип токена
+    /// </summary>
     public TokenType Type { get; init; } = TokenType.Text;
 
-    public string Text { get; init; } = text;
-
-    public bool AtStartOfLine { get; init; } = atStart;
-
+    /// <summary>
+    /// Является текстовым литералом
+    /// </summary>
     public bool IsText => Type == TokenType.Text;
+
+    /// <summary>
+    /// Является маркером форматирования
+    /// </summary>
+    public bool IsFormatting => (Type == TokenType.Emphasis) ||
+                                (Type == TokenType.LittleEmphasis);
+
+    /// <summary>
+    /// Является ли маркером начала элемента ссылки
+    /// </summary>
+    public bool IsLinkStart => (Type == TokenType.LinkStart) || 
+                               (Type == TokenType.ExtLinkStart);
 
     public TokenInfo(TokenType type, string text, bool atStart = false) : this(text, atStart)
     {
         Type = type;
-        AtStartOfLine = atStart;
     }
 }

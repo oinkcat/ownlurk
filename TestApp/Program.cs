@@ -8,26 +8,17 @@ const string TestDataDir = @"../data";
 const string TestDataPath = @$"{TestDataDir}/test_wiki.txt";
 const string TestOutFile = @$"{TestDataDir}/test_text.txt";
 
-using var outWriter = new StreamWriter(TestOutFile);
-
 string testArticleText = File.ReadAllText(TestDataPath);
 
 var wikiPageParser = new WikiParser(testArticleText);
 wikiPageParser.Parse();
 
-var textBuffer = new StringBuilder();
+using var outWriter = new StreamWriter(TestOutFile);
+var htmlGenerator = new HtmlGenerationVisitor(outWriter);
 
-foreach(var element in wikiPageParser.ParsedDocument.Contents)
+foreach(var contentElement in wikiPageParser.ParsedDocument.Content)
 {
-    Console.WriteLine(element);
-
-    if(element is WikiTextElement textElem)
-    {
-        textBuffer.Append(textElem.Text);
-    }
-    else if(element is WikiEolElement)
-    {
-        outWriter.WriteLine(textBuffer.ToString());
-        textBuffer.Clear();
-    }
+    contentElement.AcceptHtmlGenerationVisitor(htmlGenerator);
 }
+
+Console.WriteLine("Converted");

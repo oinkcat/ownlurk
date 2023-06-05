@@ -6,7 +6,7 @@ namespace WikiReader.Dom;
 /// <summary>
 /// Документ Wiki-разметки
 /// </summary>
-public class WikiDocument
+public class WikiDocument : IWikiContentElement
 {
     private const string DefaultTitle = "Unnamed";
 
@@ -23,23 +23,11 @@ public class WikiDocument
     /// <summary>
     /// Элементы содержимого
     /// </summary>
-    public List<WikiElement> Contents { get; }
+    public List<WikiElement> Content { get; }
 
     public WikiDocument(string title = DefaultTitle)
     {
         Title = title;
-        Contents = new List<WikiElement>();
-    }
-
-    /// <summary>
-    /// Добавить содержимое
-    /// </summary>
-    /// <param name="element">Элемент содержимого</param>
-    public void AppendContent(WikiElement element)
-    {
-        if(element != null)
-        {
-            Contents.Add(element);
-        }
+        Content = new List<WikiElement>();
     }
 }

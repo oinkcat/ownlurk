@@ -22,6 +22,11 @@ public class WikiTextElement : WikiElement
 
     public WikiTextElement(string text) => Text = text;
 
+    public override void AcceptHtmlGenerationVisitor(HtmlGenerationVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
+
     /// <summary>
     /// Выдать текст элемента как строку
     /// </summary>

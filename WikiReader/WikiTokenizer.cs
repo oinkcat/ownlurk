@@ -27,7 +27,8 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
         ["=="] = TokenType.TwoEqual,
         ["|"] = TokenType.Bar,
         ["*"] = TokenType.Star,
-        ["'"] = TokenType.Quote,
+        ["'''"] = TokenType.Emphasis,
+        ["''"] = TokenType.LittleEmphasis,
         ["\n"] = TokenType.NewLine,
         [@"\\"] = TokenType.NewLine
     };
