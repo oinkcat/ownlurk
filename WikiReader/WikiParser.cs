@@ -42,6 +42,7 @@ public class WikiParser
         }
     }
 
+    // Разобрать токен
     private WikiElement ParseGenericElement()
     {
         var token = tokenizer.Current;
@@ -66,12 +67,17 @@ public class WikiParser
         {
             return ParseHeaderElement(token.Text.Length);
         }
+        else if(token.AtStartOfLine && token.IsList)
+        {
+            return ParseListElement(token.Type == TokenType.Sharp);
+        }
         else
         {
             return null;
         }
     }
 
+    // Разобрать разметку ссылки
     private WikiLinkElement ParseLinkElement(bool isExternal)
     {
         tokenizer.MoveNext();
@@ -84,6 +90,7 @@ public class WikiParser
                 IsExternal = isExternal
             };
 
+            tokenizer.MoveNext();
             var expectedEndToken = isExternal ? TokenType.ExtLinkEnd : TokenType.LinkEnd;
             AppendContentUntilEndToken(linkElem, expectedEndToken);
 
@@ -99,11 +106,34 @@ public class WikiParser
     {       
         while(tokenizer.Current.Type != endToken)
         {
-            tokenizer.MoveNext();
             element.AppendContent(ParseGenericElement());
+            tokenizer.MoveNext();
         }
     }
 
+    // Разобрать разметку списка
+    private WikiListElement ParseListElement(bool isNumbered)
+    {
+        var listElem = new WikiListElement { IsNumbered = isNumbered };
+
+        do
+        {
+            var element = listElem.AddElement();
+
+            while (tokenizer.Current.Type != TokenType.NewLine)
+            {
+                tokenizer.MoveNext();
+                element.Add(ParseGenericElement());
+            }
+
+            tokenizer.MoveNext();
+        }
+        while (tokenizer.Current.AtStartOfLine && tokenizer.Current.IsList);
+
+        return listElem;
+    }
+
+    // Разобрать разметку форматированного текста
     private WikiFormattedElement ParseFormattedElement(bool isBold)
     {
         var formattedElem = new WikiFormattedElement
@@ -111,15 +141,19 @@ public class WikiParser
             Type = isBold ? FormattingType.Bold : FormattingType.Italic
         };
 
+        tokenizer.MoveNext();
         var expectedEndToken = isBold ? TokenType.Emphasis : TokenType.LittleEmphasis;
         AppendContentUntilEndToken(formattedElem, expectedEndToken);
 
         return formattedElem;
     }
 
+    // Разобрать разметку элемента списка
     private WikiHeaderElement ParseHeaderElement(int level)
     {
         var headerElem = new WikiHeaderElement { Level = level };
+
+        tokenizer.MoveNext();
         AppendContentUntilEndToken(headerElem, TokenType.NewLine);
 
         return headerElem;

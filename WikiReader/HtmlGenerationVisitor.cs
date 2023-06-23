@@ -41,6 +41,10 @@ namespace WikiReader
             {
                 VisitLinkElement(linkElem);
             }
+            else if(element is WikiListElement listElem)
+            {
+                VisitListElement(listElem);
+            }
             else if(element is WikiEolElement)
             {
                 outHtmlWriter.WriteLine();
@@ -58,18 +62,28 @@ namespace WikiReader
             WriteEndTag(htmlFormattingTag);
         }
 
-        private void WriteStartTag(string tagName)
+        private void WriteStartTag(string tagName, bool appendNewLine = false)
         {
             outHtmlWriter.Write($"<{tagName}>");
+
+            if(appendNewLine)
+            {
+                outHtmlWriter.WriteLine();
+            }
         }
 
-        private void WriteEndTag(string tagName)
+        private void WriteEndTag(string tagName, bool appendNewLine = false)
         {
             outHtmlWriter.Write($"</{tagName}>");
+
+            if (appendNewLine)
+            {
+                outHtmlWriter.WriteLine();
+            }
         }
 
         private void VisitElementContent(IWikiContentElement contentElem)
-        {            
+        {
             foreach(var elem in contentElem.Content)
             {
                 elem.AcceptHtmlGenerationVisitor(this);
@@ -105,6 +119,26 @@ namespace WikiReader
             }
 
             WriteEndTag("a");
+        }
+
+        private void VisitListElement(WikiListElement listElem)
+        {
+            string listTag = listElem.IsNumbered ? "ol" : "ul";
+            WriteStartTag(listTag, true);
+
+            foreach(var itemContents in listElem.ContentItems)
+            {
+                WriteStartTag("li", true);
+
+                foreach (var elem in itemContents)
+                {
+                    elem?.AcceptHtmlGenerationVisitor(this);
+                }
+
+                WriteEndTag("li", true);
+            }
+
+            WriteEndTag(listTag, true);
         }
     }
 }

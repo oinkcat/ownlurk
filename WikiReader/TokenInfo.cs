@@ -21,6 +21,7 @@ public enum TokenType
     TwoEqual,
     Bar,
     Star,
+    Sharp,
     Emphasis,
     LittleEmphasis,
     Text,
@@ -54,6 +55,11 @@ public record TokenInfo(string Text, bool AtStartOfLine = false)
     /// </summary>
     public bool IsLinkStart => (Type == TokenType.LinkStart) || 
                                (Type == TokenType.ExtLinkStart);
+
+    /// <summary>
+    /// Является ли маркером начала списка
+    /// </summary>
+    public bool IsList => (Type == TokenType.Star) || (Type == TokenType.Sharp);
 
     public TokenInfo(TokenType type, string text, bool atStart = false) : this(text, atStart)
     {

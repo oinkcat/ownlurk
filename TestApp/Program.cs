@@ -4,7 +4,7 @@ using System.Text;
 using WikiReader;
 using WikiReader.Dom;
 
-const string TestDataDir = @"../data";
+const string TestDataDir = @"../../../../data";
 const string TestDataPath = @$"{TestDataDir}/test_wiki.txt";
 const string TestOutFile = @$"{TestDataDir}/test_text.txt";
 
