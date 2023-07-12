@@ -25,6 +25,24 @@ public class WikiLinkElement : WikiElement, IWikiContentElement
     /// </summary>
     public bool IsExternal { get; set; }
 
+    /// <summary>
+    /// Исправить текст содержимого внешней ссылки (отделен пробелом от URL)
+    /// </summary>
+    public void FixExternalLinkContent()
+    {
+        if(IsExternal)
+        {
+            string[] contentParts = Uri.Text.Split(' ', 2);
+
+            if(contentParts.Length > 1)
+            {
+                Uri.Text = contentParts[0];
+                string linkDescriptionText = contentParts[1];
+                Content.Insert(0, new WikiTextElement(linkDescriptionText));
+            }
+        }
+    }
+
     public override void AcceptHtmlGenerationVisitor(HtmlGenerationVisitor visitor)
     {
         visitor.Visit(this);

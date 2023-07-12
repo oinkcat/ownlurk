@@ -11,8 +11,8 @@ namespace WikiReader;
 public enum TokenType
 {
     EscapeStart,
-    ObjectStart,
-    ObjectEnd,
+    TemplateStart,
+    TemplateEnd,
     LinkStart,
     LinkEnd,
     ExtLinkStart,
@@ -55,6 +55,11 @@ public record TokenInfo(string Text, bool AtStartOfLine = false)
     /// </summary>
     public bool IsLinkStart => (Type == TokenType.LinkStart) || 
                                (Type == TokenType.ExtLinkStart);
+
+    /// <summary>
+    /// Является ли маркером начала шаблона
+    /// </summary>
+    public bool IsTemplateStart => Type == TokenType.TemplateStart;
 
     /// <summary>
     /// Является ли маркером начала списка

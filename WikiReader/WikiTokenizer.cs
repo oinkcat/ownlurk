@@ -17,8 +17,8 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
     private readonly Dictionary<string, TokenType> tokensMap = new()
     {
         [EscapeStart] = TokenType.EscapeStart,
-        ["{{"] = TokenType.ObjectStart,
-        ["}}"] = TokenType.ObjectEnd,
+        ["{{"] = TokenType.TemplateStart,
+        ["}}"] = TokenType.TemplateEnd,
         ["[["] = TokenType.LinkStart,
         ["]]"] = TokenType.LinkEnd,
         ["["] = TokenType.ExtLinkStart,

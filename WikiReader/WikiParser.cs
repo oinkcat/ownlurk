@@ -11,8 +11,6 @@ namespace WikiReader;
 /// </summary>
 public class WikiParser
 {
-    private readonly string textToParse;
-
     private readonly WikiTokenizer tokenizer;
 
     /// <summary>
@@ -22,7 +20,6 @@ public class WikiParser
 
     public WikiParser(string inputText)
     {
-        textToParse = inputText;
         tokenizer = new WikiTokenizer(inputText);
     }
 
@@ -71,6 +68,10 @@ public class WikiParser
         {
             return ParseListElement(token.Type == TokenType.Sharp);
         }
+        else if(token.IsTemplateStart)
+        {
+            return ParseTemplateElement();
+        }
         else
         {
             return null;
@@ -94,6 +95,8 @@ public class WikiParser
             var expectedEndToken = isExternal ? TokenType.ExtLinkEnd : TokenType.LinkEnd;
             AppendContentUntilEndToken(linkElem, expectedEndToken);
 
+            linkElem.FixExternalLinkContent();
+
             return linkElem;
         }
         else
@@ -109,28 +112,6 @@ public class WikiParser
             element.AppendContent(ParseGenericElement());
             tokenizer.MoveNext();
         }
-    }
-
-    // Разобрать разметку списка
-    private WikiListElement ParseListElement(bool isNumbered)
-    {
-        var listElem = new WikiListElement { IsNumbered = isNumbered };
-
-        do
-        {
-            var element = listElem.AddElement();
-
-            while (tokenizer.Current.Type != TokenType.NewLine)
-            {
-                tokenizer.MoveNext();
-                element.Add(ParseGenericElement());
-            }
-
-            tokenizer.MoveNext();
-        }
-        while (tokenizer.Current.AtStartOfLine && tokenizer.Current.IsList);
-
-        return listElem;
     }
 
     // Разобрать разметку форматированного текста
@@ -157,5 +138,64 @@ public class WikiParser
         AppendContentUntilEndToken(headerElem, TokenType.NewLine);
 
         return headerElem;
+    }
+
+    // Разобрать разметку списка
+    private WikiListElement ParseListElement(bool isNumbered)
+    {
+        var listElem = new WikiListElement { IsNumbered = isNumbered };
+
+        do
+        {
+            var element = listElem.AddElement();
+
+            while (tokenizer.Current.Type != TokenType.NewLine)
+            {
+                tokenizer.MoveNext();
+                element.Add(ParseGenericElement());
+            }
+
+            tokenizer.MoveNext();
+        }
+        while (tokenizer.Current.AtStartOfLine && tokenizer.Current.IsList);
+
+        return listElem;
+    }
+
+    // Разобрать разметку шаблона (ссылка на шаблон)
+    private WikiTemplateElement ParseTemplateElement()
+    {
+        var templateElem = new WikiTemplateElement();
+
+        tokenizer.MoveNext();
+
+        // Название шаблона
+        if(tokenizer.Current.IsText)
+        {
+            templateElem.Name = tokenizer.Current.Text;
+        }
+        else
+        {
+            throw new ApplicationException("Invalid template name!");
+        }
+
+        tokenizer.MoveNext();
+
+        // Подстановки шаблона
+        while (tokenizer.Current.Type != TokenType.TemplateEnd)
+        {
+            if (tokenizer.Current.Type == TokenType.Bar)
+            {
+                templateElem.StartNewSubstitution();
+            }
+            else
+            {
+                templateElem.AppendSubstitutionContent(ParseGenericElement());
+            }
+
+            tokenizer.MoveNext();
+        }
+
+        return templateElem;
     }
 }

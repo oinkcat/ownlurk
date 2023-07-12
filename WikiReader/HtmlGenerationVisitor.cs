@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WikiReader.Dom;
+using WikiReader.Templates;
 
 namespace WikiReader
 {
@@ -17,6 +18,18 @@ namespace WikiReader
         public HtmlGenerationVisitor(TextWriter writer)
         {
             outHtmlWriter = writer;
+        }
+
+        /// <summary>
+        /// Выполнить обход списка элементов Wiki разметки
+        /// </summary>
+        /// <param name="elements">Список элементов, обход которых выполнить</param>
+        public void VisitMultipleElements(List<WikiElement> elements)
+        {
+            foreach (var elem in elements)
+            {
+                elem.AcceptHtmlGenerationVisitor(this);
+            }
         }
 
         /// <summary>
@@ -44,6 +57,10 @@ namespace WikiReader
             else if(element is WikiListElement listElem)
             {
                 VisitListElement(listElem);
+            }
+            else if(element is WikiTemplateElement templateElem)
+            {
+                VisitTemplateElement(templateElem);
             }
             else if(element is WikiEolElement)
             {
@@ -139,6 +156,16 @@ namespace WikiReader
             }
 
             WriteEndTag(listTag, true);
+        }
+
+        private void VisitTemplateElement(WikiTemplateElement templateElem)
+        {
+            WriteStartTag("div class=\"template\"");
+
+            var renderer = WikiTemplateRenderer.CreateForTemplate(templateElem);
+            renderer.GenerateLayout(outHtmlWriter, this);
+
+            WriteEndTag("div");
         }
     }
 }

@@ -8,7 +8,7 @@ namespace WikiReader;
 /// <summary>
 /// Осуществляет обход узлов элементов Wiki разметки
 /// </summary>
-public interface IWikiElementVisitor
+internal interface IWikiElementVisitor
 {
     /// <summary>
     /// Выполнить обход узла элемента

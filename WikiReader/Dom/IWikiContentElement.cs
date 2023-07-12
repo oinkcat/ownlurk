@@ -1,28 +1,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace WikiReader.Dom
+namespace WikiReader.Dom;
+
+/// <summary>
+/// Элемент Wiki разметки, имеющий содержимое
+/// </summary>
+public interface IWikiContentElement
 {
     /// <summary>
-    /// Элемент Wiki разметки, имеющий содержимое
+    /// Содержимое
     /// </summary>
-    public interface IWikiContentElement
-    {
-        /// <summary>
-        /// Содержимое
-        /// </summary>
-        List<WikiElement> Content { get; }
+    List<WikiElement> Content { get; }
 
-        /// <summary>
-        /// Добавить содержимое
-        /// </summary>
-        /// <param name="element">Элемент содержимого</param>
-        public void AppendContent(WikiElement element)
+    /// <summary>
+    /// Добавить содержимое
+    /// </summary>
+    /// <param name="element">Элемент содержимого</param>
+    public void AppendContent(WikiElement element)
+    {
+        if(element != null)
         {
-            if(element != null)
-            {
-                Content.Add(element);
-            }
+            Content.Add(element);
         }
     }
 }
