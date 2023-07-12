@@ -7,3 +7,5 @@ TestApp/obj
 WikiReader/bin
 WikiReader/obj
 /.vs
+/LurkViewer/obj
+/LurkViewer/bin/Debug
