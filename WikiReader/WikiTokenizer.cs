@@ -125,8 +125,9 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
             nextMatchIndex = i + l;
         }
         else
-        {    
-            Current = (TryExtractPossibleTextMatch(nextMatchIndex, textToTokenize.Length, out string rest))
+        {
+            int fullLength = textToTokenize.Length;
+            Current = (TryExtractPossibleTextMatch(nextMatchIndex, fullLength, out string rest))
                 ? new TokenInfo(rest, prevAtEol)
                 : null;
                 
