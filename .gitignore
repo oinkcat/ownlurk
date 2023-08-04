@@ -9,3 +9,7 @@ WikiReader/obj
 /.vs
 /LurkViewer/bin
 /LurkViewer/obj
+/data/lurk_data.zip
+/LurkViewer/Resources/Raw/lurk_data.zip
+/WikiReader.Tests/obj
+/WikiReader.Tests/bin/Debug/net6.0
