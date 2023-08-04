@@ -28,6 +28,7 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
         ["|"] = TokenType.Bar,
         ["*"] = TokenType.Star,
         ["#"] = TokenType.Sharp,
+        ["'{4,}"] = TokenType.MultiEmphasis,
         ["'''"] = TokenType.Emphasis,
         ["''"] = TokenType.LittleEmphasis,
         ["\n"] = TokenType.NewLine,
@@ -53,6 +54,11 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
     private int nextMatchIndex;
 
     private bool prevAtEol;
+
+    /// <summary>
+    /// Номер текущей строки
+    /// </summary>
+    public int CurrentRowNumber { get; private set; }
     
     public WikiTokenizer(string inputText)
     {
@@ -61,15 +67,19 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
 
         textToTokenize = inputText;
         prevAtEol = true;
+        CurrentRowNumber = 1;
     }
     
     private string ConstructParseRegexTemplate()
     {
         var alternatives = new List<string>();
         
-        foreach(string templatePart in tokensMap.Keys)
+        foreach((string templatePart, TokenType type) in tokensMap)
         {
-            alternatives.Add(Regex.Escape(templatePart));
+            string altText = (type == TokenType.MultiEmphasis)
+                ? templatePart
+                : Regex.Escape(templatePart);
+            alternatives.Add(altText);
         }
     
         return String.Join('|', alternatives);
@@ -93,23 +103,26 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
         {
             var (i, l) = (newMatch.Index, newMatch.Length);
             string tokenText = textToTokenize.Substring(i, l);
-            matchedTokenType = tokensMap[tokenText];
+
+            matchedTokenType = tokensMap.TryGetValue(tokenText, out var type)
+                ? type
+                : TokenType.MultiEmphasis;
 
             TokenInfo matchedTokenInfo;
 
-            if(matchedTokenType == TokenType.EscapeStart)
+            if (matchedTokenType == TokenType.EscapeStart)
             {
                 int escapeEndIdx = textToTokenize.IndexOf(EscapeEnd, i);
                 int escLen = EscapeStart.Length;
 
-                string escapedText = textToTokenize[(i + escLen) .. escapeEndIdx];
+                string escapedText = textToTokenize[(i + escLen)..escapeEndIdx];
                 matchedTokenInfo = new TokenInfo(escapedText, prevAtEol);
 
                 l = escapeEndIdx - i + 1;
             }
             else
             {
-                matchedTokenInfo = new TokenInfo(tokensMap[tokenText], tokenText, prevAtEol);
+                matchedTokenInfo = new TokenInfo(matchedTokenType.Value, tokenText, prevAtEol);
             }
 
             if (TryExtractPossibleTextMatch(nextMatchIndex, i, out string text))
@@ -135,6 +148,11 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
         }
 
         prevAtEol = matchedTokenType == TokenType.NewLine;
+
+        if(prevAtEol)
+        {
+            CurrentRowNumber++;
+        }
         
         return Current != null;
     }

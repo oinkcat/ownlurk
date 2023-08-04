@@ -22,6 +22,7 @@ public enum TokenType
     Bar,
     Star,
     Sharp,
+    MultiEmphasis,
     Emphasis,
     LittleEmphasis,
     Text,
@@ -47,7 +48,8 @@ public record TokenInfo(string Text, bool AtStartOfLine = false)
     /// <summary>
     /// Является маркером форматирования
     /// </summary>
-    public bool IsFormatting => (Type == TokenType.Emphasis) ||
+    public bool IsFormatting => (Type == TokenType.MultiEmphasis) ||
+                                (Type == TokenType.Emphasis) ||
                                 (Type == TokenType.LittleEmphasis);
 
     /// <summary>

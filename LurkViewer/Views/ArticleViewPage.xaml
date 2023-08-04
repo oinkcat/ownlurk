@@ -4,6 +4,6 @@
              x:Class="LurkViewer.Views.ArticleViewPage"
              Title="%ARTICLE_TITLE%">
     <Grid>
-        <WebView x:Name="articleBrowser" />
+        <WebView x:Name="ArticleBrowser" Navigating="ArticleBrowser_Navigating" />
     </Grid>
 </ContentPage>

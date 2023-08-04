@@ -10,7 +10,7 @@
     <Grid>
         <ListView HasUnevenRows="True"
                   ItemsSource="{Binding AllCategories}"
-                  SelectedItem="{Binding SelectedCategory}">
+                  SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:ArticleCategory">
                     <ViewCell>
@@ -18,13 +18,13 @@
                             <Label FontSize="Medium" Text="{Binding Name}" />
 
                             <HorizontalStackLayout Spacing="4">
-                                <Label FontSize="Small" 
-                                   TextColor="Gray" 
-                                   Text="Статей:" />
+                                <Label FontSize="Micro"
+                                       TextColor="Gray"
+                                       Text="Статей:" />
 
-                                <Label FontSize="Small" 
-                                   TextColor="Gray" 
-                                   Text="{Binding ArticlesCount}" />
+                                <Label FontSize="Micro" 
+                                       TextColor="Gray" 
+                                       Text="{Binding ArticlesCount}" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </ViewCell>

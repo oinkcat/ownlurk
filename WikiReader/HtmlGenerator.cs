@@ -56,6 +56,7 @@ namespace WikiReader
             var fieldRegex = new Regex(FieldRegexTemplate, RegexOptions.Compiled);
 
             int contentStartPos = -1;
+            int extraLength = 0;
 
             string preparedTemplateText = fieldRegex.Replace(templateText, match =>
             {
@@ -63,13 +64,14 @@ namespace WikiReader
 
                 if (fieldName == TitleField)
                 {
+                    extraLength = document.Title.Length - match.Value.Length;
                     return document.Title;
                 }
                 else if (fieldName == ContentField)
                 {
                     if(contentStartPos == -1)
                     {
-                        contentStartPos = match.Index;
+                        contentStartPos = match.Index + extraLength;
                     }
                     return String.Empty;
                 }

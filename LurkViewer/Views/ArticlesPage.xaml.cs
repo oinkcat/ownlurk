@@ -43,7 +43,15 @@ public partial class ArticlesPage : ContentPage
 		BindingContext = this;
 	}
 
-	private async void GoToArticleViewer()
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        SelectedArticle = null;
+		OnPropertyChanged(nameof(SelectedArticle));
+
+        base.OnNavigatedTo(args);
+    }
+
+    private async void GoToArticleViewer()
 	{
 		await Navigation.PushAsync(new ArticleViewPage(SelectedArticle));
 	}

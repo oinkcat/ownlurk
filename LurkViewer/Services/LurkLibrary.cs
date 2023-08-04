@@ -44,22 +44,32 @@ namespace LurkViewer.Services
 
         private LurkLibrary()
         {
-            bundleFilePath = Path.Combine(FileSystem.AppDataDirectory, BundleName);
-            templateFilePath = Path.Combine(FileSystem.AppDataDirectory, TemplateName);
+            bundleFilePath = Path.Combine(FileSystem.CacheDirectory, BundleName);
+            templateFilePath = Path.Combine(FileSystem.CacheDirectory, TemplateName);
         }
 
         /// <summary>
-        /// Инициализировать компоненты
+        /// Инициализировать архив и таблицу содержимого
         /// </summary>
         public async Task Initialize()
         {
             if(bundle != null || toc != null) { return; }
 
+            // Кэшировать ресурсы
             await CacheAssets();
 
+            // Загрузить данные
             bundle = new ContentBundle(bundleFilePath);
             toc = new TableOfContents();
             await toc.LoadFromStream(bundle.GetTocStream());
+
+            // Отфильтровать только имеющиеся статьи
+            var existingArticleIds = new HashSet<int>(bundle.GetExistingArticleIds());
+
+            foreach(var category in Categories)
+            {
+                category.Articles.RemoveAll(a => !existingArticleIds.Contains(a.Id));
+            }
         }
 
         private async Task CacheAssets()
@@ -99,6 +109,20 @@ namespace LurkViewer.Services
             htmlGenerator.Generate(layoutWriter);
 
             return layoutWriter.ToString();
+        }
+
+        /// <summary>
+        /// Получить информацию о статье по ее имени
+        /// </summary>
+        /// <param name="articleName">Имя статьи</param>
+        /// <returns>Информация о статье</returns>
+        public Article GetArticleByName(string articleName)
+        {
+            int? articleId = toc.GetArticleIdByName(articleName);
+
+            return articleId.HasValue
+                ? new Article { Id = articleId.Value, Name = articleName }
+                : null;
         }
     }
 }

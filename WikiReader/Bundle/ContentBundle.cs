@@ -37,6 +37,18 @@ public class ContentBundle : IDisposable
     }
 
     /// <summary>
+    /// Получить идентификаторы имеющихся статей
+    /// </summary>
+    /// <returns>Идентификаторы статей в архиве</returns>
+    public IEnumerable<int> GetExistingArticleIds()
+    {
+        return bundleArchive.Entries
+            .Where(e => e.FullName.StartsWith(ContentDirName) && (e.Length > 0))
+            .Select(e => Path.GetFileNameWithoutExtension(e.FullName))
+            .Select(name => int.Parse(name));
+    }
+
+    /// <summary>
     /// Получить поток данных таблицы содержимого
     /// </summary>
     /// <returns>Поток данных содержания</returns>

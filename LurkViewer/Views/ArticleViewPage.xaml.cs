@@ -1,9 +1,14 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using WikiReader.Toc;
 using LurkViewer.Services;
 
 namespace LurkViewer.Views;
 
+/// <summary>
+/// Страница просмотра текста статьи
+/// </summary>
 public partial class ArticleViewPage : ContentPage
 {
 	private readonly Article viewingArticle;
@@ -25,11 +30,40 @@ public partial class ArticleViewPage : ContentPage
 
 		if(!isLoaded)
 		{
-			string layout = await LurkLibrary.Instance.GetRenderedArticle(viewingArticle);
-			articleBrowser.Source = new HtmlWebViewSource { Html = layout };
+			await DisplayRenderedArticle(viewingArticle);
 			isLoaded = true;
 		}
 
 		IsBusy = false;
+    }
+
+	private async Task DisplayRenderedArticle(Article articleToDisplay)
+    {
+        string layout = await LurkLibrary.Instance.GetRenderedArticle(articleToDisplay);
+        ArticleBrowser.Source = new HtmlWebViewSource { Html = layout };
+    }
+
+    private async void ArticleBrowser_Navigating(object sender, WebNavigatingEventArgs e)
+    {
+		const string InlineDataUriScheme = "data";
+
+		var uriInfo = new Uri(e.Url);
+
+		// Признак внутренней ссылки - домен 127.0.0.1
+		if(uriInfo.IsLoopback)
+		{
+			string articleName = Uri.UnescapeDataString(uriInfo.LocalPath).TrimStart('/');
+			var articleToJump = LurkLibrary.Instance.GetArticleByName(articleName);
+
+			if(articleToJump != null)
+			{
+				await DisplayRenderedArticle(articleToJump);
+			}
+		}
+
+		if(uriInfo.Scheme != InlineDataUriScheme)
+        {
+            e.Cancel = true;
+        }
     }
 }

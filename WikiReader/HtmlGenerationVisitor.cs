@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WikiReader.Dom;
 using WikiReader.Templates;
+using System.Reflection.Metadata.Ecma335;
 
 namespace WikiReader
 {
@@ -28,6 +29,8 @@ namespace WikiReader
         {
             foreach (var elem in elements)
             {
+                if(elem == null) { continue; }
+
                 elem.AcceptHtmlGenerationVisitor(this);
             }
         }
@@ -38,6 +41,8 @@ namespace WikiReader
         /// <param name="element">Элемент, обход которого осуществляется</param>
         public void Visit(WikiElement element)
         {
+            if(element == null) { return; }
+
             if(element is WikiTextElement textElem)
             {
                 outHtmlWriter.Write(textElem.Text);
@@ -62,9 +67,9 @@ namespace WikiReader
             {
                 VisitTemplateElement(templateElem);
             }
-            else if(element is WikiEolElement)
+            else if(element is WikiEolElement eolElem)
             {
-                outHtmlWriter.WriteLine();
+                VisitEndOfLineElement(eolElem);
             }
         }
 
@@ -120,9 +125,11 @@ namespace WikiReader
 
         private void VisitLinkElement(WikiLinkElement linkElem)
         {
+            const string InternalLinkDomain = "127.0.0.1";
+
             string href = linkElem.IsExternal
                     ? linkElem.Uri.Text
-                    : $"#{linkElem.Uri.Text}"; // TODO: Internal link href
+                    : $"http://{InternalLinkDomain}/{linkElem.Uri.Text}";
 
             outHtmlWriter.Write($"<a href=\"{href}\">");
 
@@ -166,6 +173,16 @@ namespace WikiReader
             renderer.GenerateLayout(outHtmlWriter, this);
 
             WriteEndTag("div");
+        }
+
+        private void VisitEndOfLineElement(WikiEolElement eolElem)
+        {
+            if(eolElem.IsaHardBreak)
+            {
+                WriteStartTag("br /");
+            }
+
+            outHtmlWriter.WriteLine();
         }
     }
 }

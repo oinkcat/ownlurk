@@ -13,6 +13,8 @@ public class WikiParser
 {
     private readonly WikiTokenizer tokenizer;
 
+    private readonly Stack<(WikiFormattedElement, int)> formatTagsNesting;
+
     /// <summary>
     /// Элементы разобранного документа
     /// </summary>
@@ -21,6 +23,7 @@ public class WikiParser
     public WikiParser(string inputText)
     {
         tokenizer = new WikiTokenizer(inputText);
+        formatTagsNesting = new();
     }
 
     /// <summary>
@@ -31,6 +34,7 @@ public class WikiParser
         if(ParsedDocument != null) { return; }
 
         ParsedDocument = new WikiDocument();
+        formatTagsNesting.Clear();
 
         while(tokenizer.MoveNext())
         {
@@ -54,11 +58,11 @@ public class WikiParser
         }
         else if(token.IsFormatting)
         {
-            return ParseFormattedElement(token.Type == TokenType.Emphasis);
+            return ParseFormattedElement();
         }
         else if(token.Type == TokenType.NewLine)
         {
-            return new WikiEolElement();
+            return ParseEndOfLineElement();
         }
         else if(token.AtStartOfLine && (token.Type == TokenType.TwoEqual))
         {
@@ -115,19 +119,91 @@ public class WikiParser
     }
 
     // Разобрать разметку форматированного текста
-    private WikiFormattedElement ParseFormattedElement(bool isBold)
+    private WikiFormattedElement ParseFormattedElement()
     {
-        var formattedElem = new WikiFormattedElement
+        if((tokenizer.Current.Type == TokenType.MultiEmphasis) &&
+           (tokenizer.Current.Text.Length % 2 == 0))
         {
-            Type = isBold ? FormattingType.Bold : FormattingType.Italic
-        };
+            return null;
+        }
 
-        tokenizer.MoveNext();
-        var expectedEndToken = isBold ? TokenType.Emphasis : TokenType.LittleEmphasis;
-        AppendContentUntilEndToken(formattedElem, expectedEndToken);
+        // Открывающий тэг
+        var formattedElem = new WikiFormattedElement();
+        formatTagsNesting.Push((formattedElem, tokenizer.CurrentRowNumber));
+
+        // Содержимое
+        if(tokenizer.Current.Type == TokenType.MultiEmphasis)
+        {
+            ParseMultiFormatting(formattedElem);
+        }
+        else
+        {
+            ParseSimpleFormatting(formattedElem, tokenizer.Current.Type == TokenType.Emphasis);
+        }
+
+        formatTagsNesting.Pop();
 
         return formattedElem;
     }
+
+    private void ParseMultiFormatting(WikiFormattedElement formattedElem)
+    {
+        var nestedFormattedElem = new WikiFormattedElement();
+        formatTagsNesting.Push((nestedFormattedElem, tokenizer.CurrentRowNumber));
+        formattedElem.Content.Add(nestedFormattedElem);
+        formattedElem = nestedFormattedElem;
+
+        tokenizer.MoveNext();
+
+        while(true)
+        {
+            formattedElem.Content.Add(ParseGenericElement());
+            tokenizer.MoveNext();
+
+            if(tokenizer.Current.Type == TokenType.MultiEmphasis)
+            {
+                break;
+            }
+            else if(tokenizer.Current.IsFormatting)
+            {
+                bool nestedIsBold = tokenizer.Current.Type == TokenType.Emphasis;
+                formattedElem.Type = nestedIsBold ? FormattingType.Bold : FormattingType.Italic;
+
+                _ = formatTagsNesting.Pop();
+                (formattedElem, _) = formatTagsNesting.Peek();
+
+                ParseSimpleFormatting(formattedElem, !nestedIsBold);
+                break;
+            }
+        }
+    }
+
+    private void ParseSimpleFormatting(WikiFormattedElement formattedElem, bool isBold)
+    {
+        formattedElem.Type = isBold ? FormattingType.Bold : FormattingType.Italic;
+        var closingTagType = isBold ? TokenType.Emphasis : TokenType.LittleEmphasis;
+        tokenizer.MoveNext();
+
+        while(tokenizer.Current.Type != closingTagType)
+        {
+            formattedElem.Content.Add(ParseGenericElement());
+            tokenizer.MoveNext();
+
+            if(tokenizer.Current.Type == TokenType.MultiEmphasis)
+            {
+                var replaceTokenType = isBold ? TokenType.LittleEmphasis : TokenType.Emphasis;
+                string replaceTokenText = isBold ? "''" : "'''";
+                tokenizer.PushBack(new TokenInfo(replaceTokenType, replaceTokenText));
+                break;
+            }
+        }
+    }
+
+    // Разобрать элемент окончания строки
+    private WikiEolElement ParseEndOfLineElement() => new()
+    { 
+        IsaHardBreak = tokenizer.Current.AtStartOfLine 
+    };
 
     // Разобрать разметку элемента списка
     private WikiHeaderElement ParseHeaderElement(int level)
@@ -158,6 +234,8 @@ public class WikiParser
             tokenizer.MoveNext();
         }
         while (tokenizer.Current.AtStartOfLine && tokenizer.Current.IsList);
+
+        tokenizer.PushBack();
 
         return listElem;
     }

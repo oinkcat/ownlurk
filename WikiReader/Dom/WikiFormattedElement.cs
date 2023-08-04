@@ -10,6 +10,7 @@ namespace WikiReader.Dom;
 /// </summary>
 public enum FormattingType
 {
+    Undefined,
     Bold,
     Italic
 }

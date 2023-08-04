@@ -60,7 +60,7 @@ public class WikiTemplateElement : WikiElement
     /// <param name="element">Элемент содержимого</param>
     public void AppendSubstitutionContent(WikiElement element)
     {
-        currentSubstitution.Add(element);
+        currentSubstitution?.Add(element);
     }
 
     public override void AcceptHtmlGenerationVisitor(HtmlGenerationVisitor visitor)

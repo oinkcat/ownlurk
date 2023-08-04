@@ -65,7 +65,7 @@ public class TableOfContents
                 if(!String.IsNullOrWhiteSpace(articleName))
                 {
                     currentCategory.AddArticleInfo(articleId, articleName);
-                    index.TryAdd(articleName, articleId);
+                    index.TryAdd(articleName.ToLowerInvariant(), articleId);
                 }
             }
         }
@@ -78,7 +78,7 @@ public class TableOfContents
     /// <returns>Идентификатор статьи</returns>
     public int? GetArticleIdByName(string articleName)
     {
-        return index.TryGetValue(articleName, out int articleId)
+        return index.TryGetValue(articleName.ToLowerInvariant(), out int articleId)
             ? articleId
             : null;
     }

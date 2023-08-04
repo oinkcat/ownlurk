@@ -64,6 +64,14 @@ public partial class CategoriesPage : ContentPage
         OnPropertyChanged(nameof(AllCategories));
     }
 
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        SelectedCategory = null;
+        OnPropertyChanged(nameof(SelectedCategory));
+
+        base.OnNavigatedTo(args);
+    }
+
     private async void GoToSelectedCategory()
     {
         await Navigation.PushAsync(new ArticlesPage(SelectedCategory));

@@ -7,7 +7,7 @@ using WikiReader.Bundle;
 const string TestDataDir = $"../../../../data";
 const string TestBundlePath = $"{TestDataDir}/lurk_data.zip";
 const string TestOutFile = $"{TestDataDir}/test_text.html";
-const string TestArticleName = "Медвед";
+const string TestArticleName = "4chan";
 
 const string TemplatePath = $"{TestDataDir}/template.html";
 

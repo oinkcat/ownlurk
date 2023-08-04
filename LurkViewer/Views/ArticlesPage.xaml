@@ -9,7 +9,7 @@
     <Grid>
         <ListView HasUnevenRows="True" 
                   ItemsSource="{Binding AllArticles}"
-                  SelectedItem="{Binding SelectedArticle}">
+                  SelectedItem="{Binding SelectedArticle, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Article">
                     <ViewCell>

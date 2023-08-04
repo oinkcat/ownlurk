@@ -10,6 +10,11 @@ namespace WikiReader.Dom;
 /// </summary>
 public class WikiEolElement : WikiElement
 {
+    /// <summary>
+    /// Явный разрыв строки
+    /// </summary>
+    public bool IsaHardBreak { get; set; }
+
     public override void AcceptHtmlGenerationVisitor(HtmlGenerationVisitor visitor)
     {
         visitor.Visit(this);
