@@ -7,7 +7,7 @@
              x:DataType="vm:ArticlesPage"
              Title="%CATEGORY_NAME%">
     <Grid>
-        <ListView HasUnevenRows="True" 
+        <ListView HasUnevenRows="True"
                   ItemsSource="{Binding AllArticles}"
                   SelectedItem="{Binding SelectedArticle, Mode=TwoWay}">
             <ListView.ItemTemplate>
