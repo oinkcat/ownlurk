@@ -11,9 +11,9 @@ namespace WikiReader.Templates;
 /// <summary>
 /// Генерирует разметку спрятанного элемента
 /// </summary>
-internal class WikiNsfwRenderer : WikiTemplateRenderer
+internal class WikiSpoilerRenderer : WikiTemplateRenderer
 {
-    public WikiNsfwRenderer(WikiTemplateElement elem) : base(elem)
+    public WikiSpoilerRenderer(WikiTemplateElement elem) : base(elem)
     {
     }
 

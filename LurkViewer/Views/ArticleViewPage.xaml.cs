@@ -21,7 +21,6 @@ public partial class ArticleViewPage : ContentPage
 		IsBusy = true;
 
 		InitializeComponent();
-		Title = article.Name;
 	}
 
     protected async override void OnAppearing()
@@ -39,8 +38,12 @@ public partial class ArticleViewPage : ContentPage
 
 	private async Task DisplayRenderedArticle(Article articleToDisplay)
     {
+        Title = $"{articleToDisplay.Name} - Loading...";
+
         string layout = await LurkLibrary.Instance.GetRenderedArticle(articleToDisplay);
         ArticleBrowser.Source = new HtmlWebViewSource { Html = layout };
+
+		Title = articleToDisplay.Name;
     }
 
     private async void ArticleBrowser_Navigating(object sender, WebNavigatingEventArgs e)

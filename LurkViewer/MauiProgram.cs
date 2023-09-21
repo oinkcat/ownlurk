@@ -1,6 +1,5 @@
 ﻿using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
-using LurkViewer.Services;
 
 namespace LurkViewer
 {

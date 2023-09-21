@@ -150,14 +150,14 @@ public class WikiParser
     {
         var nestedFormattedElem = new WikiFormattedElement();
         formatTagsNesting.Push((nestedFormattedElem, tokenizer.CurrentRowNumber));
-        formattedElem.Content.Add(nestedFormattedElem);
+        (formattedElem as IWikiContentElement).AppendContent(nestedFormattedElem);
         formattedElem = nestedFormattedElem;
 
         tokenizer.MoveNext();
 
         while(true)
         {
-            formattedElem.Content.Add(ParseGenericElement());
+            (formattedElem as IWikiContentElement).AppendContent(ParseGenericElement());
             tokenizer.MoveNext();
 
             if(tokenizer.Current.Type == TokenType.MultiEmphasis)
@@ -175,6 +175,10 @@ public class WikiParser
                 ParseSimpleFormatting(formattedElem, !nestedIsBold);
                 break;
             }
+            else if (tokenizer.Current.Type == TokenType.NewLine)
+            {
+                break; // ?
+            }
         }
     }
 
@@ -186,7 +190,7 @@ public class WikiParser
 
         while(tokenizer.Current.Type != closingTagType)
         {
-            formattedElem.Content.Add(ParseGenericElement());
+            (formattedElem as IWikiContentElement).AppendContent(ParseGenericElement());
             tokenizer.MoveNext();
 
             if(tokenizer.Current.Type == TokenType.MultiEmphasis)
@@ -195,6 +199,10 @@ public class WikiParser
                 string replaceTokenText = isBold ? "''" : "'''";
                 tokenizer.PushBack(new TokenInfo(replaceTokenType, replaceTokenText));
                 break;
+            }
+            else if(tokenizer.Current.Type == TokenType.NewLine)
+            {
+                break; // ?
             }
         }
     }
@@ -225,7 +233,8 @@ public class WikiParser
         {
             var element = listElem.AddElement();
 
-            while (tokenizer.Current.Type != TokenType.NewLine)
+            while ((tokenizer.Current.Type != TokenType.NewLine) &&
+                   (tokenizer.Current.Type != TokenType.TemplateEnd))
             {
                 tokenizer.MoveNext();
                 element.Add(ParseGenericElement());
