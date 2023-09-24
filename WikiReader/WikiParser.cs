@@ -48,7 +48,11 @@ public class WikiParser
     {
         var token = tokenizer.Current;
 
-        if(token.IsText)
+        if(token == null)
+        {
+            return null;
+        }
+        else if(token.IsText)
         {
             return new WikiTextElement(token.Text);
         }
@@ -113,6 +117,15 @@ public class WikiParser
     {       
         while(tokenizer.Current.Type != endToken)
         {
+            if(tokenizer.AtEmptyLine) { break; }
+
+            // HACK
+            if((tokenizer.Current.Type == TokenType.LinkEnd) && (endToken == TokenType.ExtLinkEnd))
+            {
+                tokenizer.ExplodeLinkToken();
+                break;
+            }
+
             element.AppendContent(ParseGenericElement());
             tokenizer.MoveNext();
         }
@@ -232,15 +245,25 @@ public class WikiParser
         do
         {
             var element = listElem.AddElement();
+            bool hasTrailingTag = false; // ???
 
-            while ((tokenizer.Current.Type != TokenType.NewLine) &&
-                   (tokenizer.Current.Type != TokenType.TemplateEnd))
+            while (tokenizer.Current.Type != TokenType.NewLine)
             {
                 tokenizer.MoveNext();
                 element.Add(ParseGenericElement());
+
+                if(tokenizer.Current.Type == TokenType.TemplateEnd)
+                {
+                    hasTrailingTag = true;
+                    break;
+                }
             }
 
+            if(hasTrailingTag) { break; }
+
             tokenizer.MoveNext();
+
+            if(tokenizer.AtEmptyLine) { break; }
         }
         while (tokenizer.Current.AtStartOfLine && tokenizer.Current.IsList);
 
@@ -257,14 +280,7 @@ public class WikiParser
         tokenizer.MoveNext();
 
         // Название шаблона
-        if(tokenizer.Current.IsText)
-        {
-            templateElem.Name = tokenizer.Current.Text;
-        }
-        else
-        {
-            throw new ApplicationException("Invalid template name!");
-        }
+        templateElem.Name = tokenizer.Current.Text;
 
         tokenizer.MoveNext();
 
@@ -274,6 +290,10 @@ public class WikiParser
             if (tokenizer.Current.Type == TokenType.Bar)
             {
                 templateElem.StartNewSubstitution();
+            }
+            else if(tokenizer.AtEmptyLine)
+            {
+                break;
             }
             else
             {

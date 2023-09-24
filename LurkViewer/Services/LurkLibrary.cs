@@ -68,7 +68,15 @@ namespace LurkViewer.Services
 
             foreach(var category in Categories)
             {
-                category.Articles.RemoveAll(a => !existingArticleIds.Contains(a.Id));
+                var articleNamesToRemove = category.Articles
+                    .Where(a => !existingArticleIds.Contains(a.Value.Id))
+                    .Select(a => a.Key)
+                    .ToArray();
+
+                foreach(string name in articleNamesToRemove)
+                {
+                    category.Articles.Remove(name);
+                }
             }
         }
 

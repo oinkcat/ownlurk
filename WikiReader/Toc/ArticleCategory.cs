@@ -16,7 +16,7 @@ public class ArticleCategory
     /// <summary>
     /// Статьи категории
     /// </summary>
-    public List<Article> Articles { get; set; }
+    public SortedList<string, Article> Articles { get; set; }
 
     /// <summary>
     /// Число статей в категории
@@ -28,10 +28,10 @@ public class ArticleCategory
     /// </summary>
     /// <param name="name">Имя новой категории</param>
     /// <returns>Информация о новой категории</returns>
-    public static ArticleCategory Create(string name) => new ArticleCategory
+    public static ArticleCategory Create(string name) => new()
     {
         Name = name,
-        Articles = new List<Article>()
+        Articles = new SortedList<string, Article>()
     };
 
     /// <summary>
@@ -47,6 +47,6 @@ public class ArticleCategory
             Name = articleName
         };
 
-        Articles.Add(newArticle);
+        _ = Articles.TryAdd(articleName, newArticle);
     }
 }

@@ -8,7 +8,7 @@ using WikiReader.Bundle;
 const string TestDataDir = $"../../../../data";
 const string TestBundlePath = $"{TestDataDir}/lurk_data.zip";
 const string TestOutFile = $"{TestDataDir}/test_text.html";
-const string TestArticleName = "Копипаста:600-кун";
+const string TestArticleName = "Виталик";
 
 const string TemplatePath = $"{TestDataDir}/template.html";
 
@@ -53,9 +53,10 @@ async static Task TestParseAllArticles(ContentBundle bundle)
 
             Console.WriteLine("OK");
         }
-        catch
+        catch(Exception e)
         {
-            Console.WriteLine("FAIL");
+            Console.Write("FAIL - ");
+            Console.WriteLine(e.Message);
         }
     }
 }

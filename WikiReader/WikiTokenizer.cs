@@ -11,12 +11,18 @@ using System.Text.RegularExpressions;
 public class WikiTokenizer : IEnumerator<TokenInfo>
 {
     private const string EscapeStart = "{{{";
+    private const string HtmlEscapeStart = "<!--";
 
-    private const string EscapeEnd = "}}}";
+    private readonly Dictionary<string, string> escapeEndsMap = new ()
+    {
+        [EscapeStart] = "}}}",
+        [HtmlEscapeStart] = "-->"
+    };
 
     private readonly Dictionary<string, TokenType> tokensMap = new()
     {
         [EscapeStart] = TokenType.EscapeStart,
+        [HtmlEscapeStart] = TokenType.EscapeStart,
         ["{{"] = TokenType.TemplateStart,
         ["}}"] = TokenType.TemplateEnd,
         ["[["] = TokenType.LinkStart,
@@ -59,7 +65,13 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
     /// Номер текущей строки
     /// </summary>
     public int CurrentRowNumber { get; private set; }
-    
+
+    /// <summary>
+    /// Текущая строка - пустая
+    /// </summary>
+    public bool AtEmptyLine => (Current == null) ||
+                               (Current.AtStartOfLine && (Current.Type == TokenType.NewLine));
+
     public WikiTokenizer(string inputText)
     {
         pushedBackTokens = new Queue<TokenInfo>();
@@ -112,7 +124,8 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
 
             if (matchedTokenType == TokenType.EscapeStart)
             {
-                int escapeEndIdx = textToTokenize.IndexOf(EscapeEnd, i);
+                string escapeEnding = escapeEndsMap[tokenText];
+                int escapeEndIdx = textToTokenize.IndexOf(escapeEnding, i);
                 int escLen = EscapeStart.Length;
 
                 string escapedText = textToTokenize[(i + escLen)..escapeEndIdx];
@@ -200,7 +213,20 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
     /// <param name="token">Токен для помещения в очередь</param>
     public void PushBack(TokenInfo token = null)
     {
-        pushedBackTokens.Enqueue(token != null ? token : Current);
+        pushedBackTokens.Enqueue(token ?? Current);
+    }
+
+    /// <summary>
+    /// Заменить двойной токен ссылки на одинарный
+    /// </summary>
+    public void ExplodeLinkToken()
+    {
+        if(Current.Type == TokenType.LinkEnd)
+        {
+            pushedBackTokens.Clear();
+            Current = new TokenInfo(TokenType.ExtLinkEnd, "]");
+            nextMatchIndex--;
+        }
     }
 
     public void Reset() => throw new NotSupportedException();

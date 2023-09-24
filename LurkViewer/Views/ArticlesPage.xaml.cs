@@ -35,7 +35,7 @@ public partial class ArticlesPage : ContentPage
 
 	public ArticlesPage(ArticleCategory category)
 	{
-		AllArticles = category.Articles;
+		AllArticles = category.Articles.Values;
 
 		InitializeComponent();
 
