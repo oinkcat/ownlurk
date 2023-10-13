@@ -15,6 +15,8 @@ public class WikiParser
 
     private readonly Stack<(WikiFormattedElement, int)> formatTagsNesting;
 
+    private WikiParagraphElement paragraph;
+
     /// <summary>
     /// Элементы разобранного документа
     /// </summary>
@@ -39,8 +41,23 @@ public class WikiParser
         while(tokenizer.MoveNext())
         {
             var parsedElement = ParseGenericElement();
-            (ParsedDocument as IWikiContentElement).AppendContent(parsedElement);
+            bool startNewParagraph = parsedElement is WikiHeaderElement;
+            
+            if (startNewParagraph)
+            {
+                AppendCurrentParagraph();
+            }
+
+            IWikiContentElement container = (paragraph == null) ? ParsedDocument : paragraph;
+            container.AppendContent(parsedElement);
+
+            if(startNewParagraph)
+            {
+                paragraph = new WikiParagraphElement();
+            }
         }
+
+        AppendCurrentParagraph();
     }
 
     // Разобрать токен
@@ -221,10 +238,29 @@ public class WikiParser
     }
 
     // Разобрать элемент окончания строки
-    private WikiEolElement ParseEndOfLineElement() => new()
-    { 
-        IsaHardBreak = tokenizer.Current.AtStartOfLine 
-    };
+    private WikiEolElement ParseEndOfLineElement()
+    {
+        if(tokenizer.Current.AtStartOfLine)
+        {
+            AppendCurrentParagraph();
+            paragraph = new WikiParagraphElement();
+            return null;
+        }
+        else
+        {
+            return new WikiEolElement();
+        }
+    }
+
+    private void AppendCurrentParagraph()
+    {
+        if ((paragraph != null) && !paragraph.IsEmpty)
+        {
+            (ParsedDocument as IWikiContentElement).AppendContent(paragraph);
+        }
+
+        paragraph = null;
+    }
 
     // Разобрать разметку элемента списка
     private WikiHeaderElement ParseHeaderElement(int level)

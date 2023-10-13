@@ -125,8 +125,8 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
             if (matchedTokenType == TokenType.EscapeStart)
             {
                 string escapeEnding = escapeEndsMap[tokenText];
-                int escapeEndIdx = textToTokenize.IndexOf(escapeEnding, i);
-                int escLen = EscapeStart.Length;
+                int escLen = tokenText.Length;
+                int escapeEndIdx = textToTokenize.IndexOf(escapeEnding, i + escLen);
 
                 string escapedText = textToTokenize[(i + escLen)..escapeEndIdx];
                 matchedTokenInfo = new TokenInfo(escapedText, prevAtEol);

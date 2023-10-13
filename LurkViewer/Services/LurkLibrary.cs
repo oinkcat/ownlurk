@@ -59,7 +59,7 @@ namespace LurkViewer.Services
             await CacheAssets();
 
             // Загрузить данные
-            bundle = new ContentBundle(bundleFilePath);
+            bundle = new ContentBundle(await FileSystem.OpenAppPackageFileAsync(BundleName));
             toc = new TableOfContents();
             await toc.LoadFromStream(bundle.GetTocStream());
 
@@ -83,18 +83,14 @@ namespace LurkViewer.Services
         private async Task CacheAssets()
         {
             (string, string)[] assets = {
-                (BundleName, bundleFilePath),
                 (TemplateName, templateFilePath)
             };
 
             foreach((string assetName, string cachedFilePath) in assets)
             {
-                if (!File.Exists(cachedFilePath))
-                {
-                    using var assetStream = await FileSystem.OpenAppPackageFileAsync(assetName);
-                    using var cachedStream = File.Create(cachedFilePath);
-                    await assetStream.CopyToAsync(cachedStream);
-                }
+                using var assetStream = await FileSystem.OpenAppPackageFileAsync(assetName);
+                using var cachedStream = File.Create(cachedFilePath);
+                await assetStream.CopyToAsync(cachedStream);
             }
         }
 

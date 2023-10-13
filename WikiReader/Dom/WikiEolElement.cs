@@ -11,9 +11,9 @@ namespace WikiReader.Dom;
 public class WikiEolElement : WikiElement
 {
     /// <summary>
-    /// Явный разрыв строки
+    /// Окончание абзаца
     /// </summary>
-    public bool IsaHardBreak { get; set; }
+    public bool IsaParagraphDelimiter { get; set; }
 
     public override void AcceptHtmlGenerationVisitor(HtmlGenerationVisitor visitor)
     {

@@ -25,6 +25,12 @@ public class ContentBundle : IDisposable
         ValidateBundle();
     }
 
+    public ContentBundle(Stream contentArchiveStream)
+    {
+        bundleArchive = new ZipArchive(contentArchiveStream);
+        ValidateBundle();
+    }
+
     private void ValidateBundle()
     {
         bool tocValid = bundleArchive.GetEntry(TocEntryName)?.Length > 0;

@@ -67,9 +67,13 @@ namespace WikiReader
             {
                 VisitTemplateElement(templateElem);
             }
-            else if(element is WikiEolElement eolElem)
+            else if(element is WikiParagraphElement paragraphElem)
             {
-                VisitEndOfLineElement(eolElem);
+                VisitParagraphElement(paragraphElem);
+            }
+            else if(element is WikiEolElement)
+            {
+                outHtmlWriter.WriteLine();
             }
         }
 
@@ -175,14 +179,11 @@ namespace WikiReader
             WriteEndTag("div");
         }
 
-        private void VisitEndOfLineElement(WikiEolElement eolElem)
+        private void VisitParagraphElement(WikiParagraphElement paragraphElem)
         {
-            if(eolElem.IsaHardBreak)
-            {
-                WriteStartTag("br /");
-            }
-
-            outHtmlWriter.WriteLine();
+            WriteStartTag("p");
+            VisitElementContent(paragraphElem);
+            WriteEndTag("p");
         }
     }
 }
