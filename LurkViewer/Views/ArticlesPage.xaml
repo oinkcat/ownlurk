@@ -9,7 +9,8 @@
     <Grid>
         <ListView HasUnevenRows="True"
                   ItemsSource="{Binding AllArticles}"
-                  SelectedItem="{Binding SelectedArticle, Mode=TwoWay}">
+                  SelectedItem="{Binding SelectedArticle, Mode=TwoWay}"
+                  CachingStrategy="RecycleElement">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Article">
                     <ViewCell>

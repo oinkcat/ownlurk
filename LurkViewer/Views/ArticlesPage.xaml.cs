@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using WikiReader.Toc;
@@ -53,6 +54,6 @@ public partial class ArticlesPage : ContentPage
 
     private async void GoToArticleViewer()
 	{
-		await Navigation.PushAsync(new ArticleViewPage(SelectedArticle));
-	}
+        await Navigation.PushAsync(new ArticleViewPage(SelectedArticle));
+    }
 }

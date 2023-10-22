@@ -18,9 +18,9 @@ public partial class ArticleViewPage : ContentPage
 	public ArticleViewPage(Article article)
 	{
 		viewingArticle = article;
-		IsBusy = true;
+		//IsBusy = true;
 
-		InitializeComponent();
+        InitializeComponent();
 	}
 
     protected async override void OnAppearing()
@@ -29,11 +29,11 @@ public partial class ArticleViewPage : ContentPage
 
 		if(!isLoaded)
 		{
-			await DisplayRenderedArticle(viewingArticle);
+            await DisplayRenderedArticle(viewingArticle);
 			isLoaded = true;
 		}
 
-		IsBusy = false;
+		//IsBusy = false;
     }
 
 	private async Task DisplayRenderedArticle(Article articleToDisplay)
@@ -43,7 +43,7 @@ public partial class ArticleViewPage : ContentPage
         string layout = await LurkLibrary.Instance.GetRenderedArticle(articleToDisplay);
         ArticleBrowser.Source = new HtmlWebViewSource { Html = layout };
 
-		Title = articleToDisplay.Name;
+        Title = articleToDisplay.Name;
     }
 
     private async void ArticleBrowser_Navigating(object sender, WebNavigatingEventArgs e)
@@ -61,7 +61,8 @@ public partial class ArticleViewPage : ContentPage
 			if(articleToJump != null)
 			{
 				await DisplayRenderedArticle(articleToJump);
-			}
+                Console.WriteLine("TEST 2");
+            }
 		}
 
 		if(uriInfo.Scheme != InlineDataUriScheme)

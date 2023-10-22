@@ -10,7 +10,8 @@
     <Grid>
         <ListView HasUnevenRows="True"
                   ItemsSource="{Binding AllCategories}"
-                  SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
+                  SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                  CachingStrategy="RecycleElement">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:ArticleCategory">
                     <ViewCell>
@@ -31,8 +32,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
-        <ActivityIndicator IsRunning="{Binding IsLoading}" />
+      
+        <ActivityIndicator WidthRequest="150"
+                           HeightRequest="150"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsRunning="{Binding IsLoading}" />
     </Grid>
 
 </ContentPage>
