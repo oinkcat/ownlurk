@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LurkViewer.Services;
 using Microsoft.Maui.Controls;
 using WikiReader.Toc;
 
@@ -48,6 +49,8 @@ public partial class ArticlesPage : ContentPage
     {
         SelectedArticle = null;
 		OnPropertyChanged(nameof(SelectedArticle));
+
+        ArticleContentsHelper.DestroyContentsPane();
 
         base.OnNavigatedTo(args);
     }

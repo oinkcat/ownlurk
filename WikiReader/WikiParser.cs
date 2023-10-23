@@ -17,6 +17,8 @@ public class WikiParser
 
     private WikiParagraphElement paragraph;
 
+    private int paragraphIndex;
+
     /// <summary>
     /// Элементы разобранного документа
     /// </summary>
@@ -35,14 +37,23 @@ public class WikiParser
     {
         if(ParsedDocument != null) { return; }
 
+        ParseArticleText();
+        ParsedDocument.Paragraphs = ParsedDocument.Content
+            .OfType<WikiHeaderElement>()
+            .Select(he => he.Content.FirstOrDefault().ToString().Trim() ?? "-")
+            .ToArray();
+    }
+    
+    // Разобрать текст статьи
+    private void ParseArticleText()
+    {
         ParsedDocument = new WikiDocument();
-        formatTagsNesting.Clear();
 
-        while(tokenizer.MoveNext())
+        while (tokenizer.MoveNext())
         {
             var parsedElement = ParseGenericElement();
             bool startNewParagraph = parsedElement is WikiHeaderElement;
-            
+
             if (startNewParagraph)
             {
                 AppendCurrentParagraph();
@@ -51,7 +62,7 @@ public class WikiParser
             IWikiContentElement container = (paragraph == null) ? ParsedDocument : paragraph;
             container.AppendContent(parsedElement);
 
-            if(startNewParagraph)
+            if (startNewParagraph)
             {
                 paragraph = new WikiParagraphElement();
             }
@@ -265,7 +276,11 @@ public class WikiParser
     // Разобрать разметку элемента списка
     private WikiHeaderElement ParseHeaderElement(int level)
     {
-        var headerElem = new WikiHeaderElement { Level = level };
+        var headerElem = new WikiHeaderElement
+        {
+            Level = level,
+            Index = paragraphIndex++
+        };
 
         tokenizer.MoveNext();
         AppendContentUntilEndToken(headerElem, TokenType.NewLine);

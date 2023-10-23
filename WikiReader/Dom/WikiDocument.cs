@@ -25,6 +25,11 @@ public class WikiDocument : IWikiContentElement
     /// </summary>
     public List<WikiElement> Content { get; }
 
+    /// <summary>
+    /// Абзацы статьи
+    /// </summary>
+    public string[] Paragraphs { get; set; }
+
     public WikiDocument(string title = DefaultTitle)
     {
         Title = title;

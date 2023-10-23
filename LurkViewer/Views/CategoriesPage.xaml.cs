@@ -69,6 +69,8 @@ public partial class CategoriesPage : ContentPage
         SelectedCategory = null;
         OnPropertyChanged(nameof(SelectedCategory));
 
+        ArticleContentsHelper.DestroyContentsPane();
+
         base.OnNavigatedTo(args);
     }
 

@@ -20,6 +20,11 @@ public class WikiTemplateElement : WikiElement
     public string Name { get; set; }
 
     /// <summary>
+    /// Элемент встроен в текст
+    /// </summary>
+    public bool IsInline { get; set; }
+
+    /// <summary>
     /// Подстановки для шаблона
     /// </summary>
     public List<Substitution> Substitutions { get; } = new();

@@ -7,13 +7,14 @@ using Microsoft.Maui.Storage;
 using WikiReader;
 using WikiReader.Bundle;
 using WikiReader.Toc;
+using LurkViewer.Models;
 
 namespace LurkViewer.Services
 {
     /// <summary>
     /// Собрание статей Lurkmore
     /// </summary>
-    public class LurkLibrary
+    internal class LurkLibrary
     {
         private const string BundleName = "lurk_data.zip";
 
@@ -98,8 +99,8 @@ namespace LurkViewer.Services
         /// Получить представление статьи в HTML
         /// </summary>
         /// <param name="article">Статья, разметку которой получить</param>
-        /// <returns>Текст разметки статьи</returns>
-        public async Task<string> GetRenderedArticle(Article article)
+        /// <returns>Информация о статье для вывода</returns>
+        public async Task<RenderedArticleInfo> GetRenderedArticle(Article article)
         {
             using var articleStream = bundle.GetArticleStream(article.Id);
             using var articleReader = new StreamReader(articleStream);
@@ -112,7 +113,12 @@ namespace LurkViewer.Services
             var htmlGenerator = new HtmlGenerator(parser.ParsedDocument, templateFilePath);
             htmlGenerator.Generate(layoutWriter);
 
-            return layoutWriter.ToString();
+            return new RenderedArticleInfo
+            {
+                Title = article.Name,
+                ParagraphNames = parser.ParsedDocument.Paragraphs,
+                RenderedLayout = layoutWriter.ToString()
+            };
         }
 
         /// <summary>

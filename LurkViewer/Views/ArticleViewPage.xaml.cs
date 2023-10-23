@@ -18,8 +18,6 @@ public partial class ArticleViewPage : ContentPage
 	public ArticleViewPage(Article article)
 	{
 		viewingArticle = article;
-		//IsBusy = true;
-
         InitializeComponent();
 	}
 
@@ -32,19 +30,31 @@ public partial class ArticleViewPage : ContentPage
             await DisplayRenderedArticle(viewingArticle);
 			isLoaded = true;
 		}
-
-		//IsBusy = false;
     }
 
 	private async Task DisplayRenderedArticle(Article articleToDisplay)
     {
+		// Распарсить и загрузить страницу
         Title = $"{articleToDisplay.Name} - Loading...";
 
-        string layout = await LurkLibrary.Instance.GetRenderedArticle(articleToDisplay);
-        ArticleBrowser.Source = new HtmlWebViewSource { Html = layout };
+        var infoToRender = await LurkLibrary.Instance.GetRenderedArticle(articleToDisplay);
+        ArticleBrowser.Source = new HtmlWebViewSource { Html = infoToRender.RenderedLayout };
 
         Title = articleToDisplay.Name;
+
+		// Показать панель содержания
+		var selectHandler = new EventHandler<int>(OnParagraphSelected);
+		ArticleContentsHelper.InitializeContentsPane(infoToRender.ParagraphNames, selectHandler);
     }
+
+	// На панели содержимого был выбран раздел
+	private async void OnParagraphSelected(object sender, int idx)
+	{
+		const string BlankUrl = "about:blank";
+
+		string anchorUrl = $"{BlankUrl}#p_{idx}";
+		await ArticleBrowser.EvaluateJavaScriptAsync($"location.href = \"{anchorUrl}\"");
+	}
 
     private async void ArticleBrowser_Navigating(object sender, WebNavigatingEventArgs e)
     {

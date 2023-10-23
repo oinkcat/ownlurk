@@ -16,6 +16,8 @@ namespace WikiReader
     {
         private readonly TextWriter outHtmlWriter;
 
+        private int chapterIdx = 0;
+
         public HtmlGenerationVisitor(TextWriter writer)
         {
             outHtmlWriter = writer;
@@ -119,9 +121,12 @@ namespace WikiReader
         private void VisitHeaderElement(WikiHeaderElement headerElem)
         {
             string headerTag = $"h{headerElem.Level}";
-
             WriteStartTag(headerTag);
+            WriteStartTag($"a name=\"p_{headerElem.Index}\"");
+            
             VisitElementContent(headerElem);
+
+            WriteEndTag("a");
             WriteEndTag(headerTag);
 
             outHtmlWriter.WriteLine();
@@ -171,12 +176,13 @@ namespace WikiReader
 
         private void VisitTemplateElement(WikiTemplateElement templateElem)
         {
-            WriteStartTag("div class=\"template\"");
+            string tagName = templateElem.IsInline ? "span" : "div";
+            WriteStartTag($"{tagName} class=\"template\"");
 
             var renderer = WikiTemplateRenderer.CreateForTemplate(templateElem);
             renderer.GenerateLayout(outHtmlWriter, this);
 
-            WriteEndTag("div");
+            WriteEndTag(tagName);
         }
 
         private void VisitParagraphElement(WikiParagraphElement paragraphElem)

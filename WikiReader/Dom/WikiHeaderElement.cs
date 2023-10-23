@@ -16,6 +16,11 @@ public class WikiHeaderElement : WikiElement, IWikiContentElement
     public int Level { get; set; }
 
     /// <summary>
+    /// Порядковый индекс
+    /// </summary>
+    public int Index { get; set; }
+
+    /// <summary>
     /// Элементы содержимого
     /// </summary>
     public List<WikiElement> Content { get; } = new();
