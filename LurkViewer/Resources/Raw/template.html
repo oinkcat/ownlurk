@@ -14,6 +14,10 @@
 				line-height: 1.5;
 			}
 			
+			article {
+				line-height: 1.5;
+			}
+			
 			.title {
 				padding-bottom: 4px;
 				border-bottom: solid 1px gray;
@@ -34,6 +38,13 @@
 				text-indent: 20px;
 			}
 		</style>
+		
+		<script type="text/javascript">
+			function scrollToChapter(idx) {
+				const chapterElem = document.getElementsByName('p_' + idx)[0];
+				chapterElem.scrollIntoView();
+			}
+		</script>
 	</head>
 	<body>
 		<article>

@@ -14,10 +14,22 @@
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
 
-    <ShellContent
-        Title="Домой"
-        FlyoutItemIsVisible="False"
-        ContentTemplate="{DataTemplate views:CategoriesPage}"
-        Route="MainPage" />
+    <TabBar>
+        <Tab Title="Статьи">
+            <ShellContent
+                Title="Домой"
+                FlyoutItemIsVisible="False"
+                ContentTemplate="{DataTemplate views:CategoriesPage}"
+                Route="MainPage" />
+        </Tab>
+
+        <Tab Title="Избранное">
+            <ShellContent
+                Title="Избранное"
+                FlyoutItemIsVisible="False"
+                ContentTemplate="{DataTemplate views:FavoritesPage}"
+                Route="FavsPage" />
+        </Tab>
+    </TabBar>
 
 </Shell>

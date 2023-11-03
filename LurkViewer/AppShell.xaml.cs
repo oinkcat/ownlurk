@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using LurkViewer.Views;
 using WikiReader.Dom;
-using System.Linq;
 
 namespace LurkViewer;
 
@@ -22,6 +22,9 @@ public partial class AppShell : Shell
     public AppShell()
     {
         InitializeComponent();
+
+        Routing.RegisterRoute("MainRoute", typeof(CategoriesPage));
+        Routing.RegisterRoute("FavsRoute", typeof(FavoritesPage));
     }
 
     /// <summary>
@@ -31,9 +34,9 @@ public partial class AppShell : Shell
     public void PopulateArticleContents(IList<string> paragraphNames)
     {
         // Удалить старые элементы
-        foreach(var menuItem in Items.OfType<MenuItem>())
+        for(int i = Items.Count - 1; i > 0; i--)
         {
-            Items.Remove(menuItem);
+            Items.RemoveAt(i);
         }
 
         // Добавить новые элементы содержимого

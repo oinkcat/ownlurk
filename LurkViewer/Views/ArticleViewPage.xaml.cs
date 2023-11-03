@@ -15,10 +15,47 @@ public partial class ArticleViewPage : ContentPage
 
 	private bool isLoaded;
 
+	private readonly FavoritesManager favManager;
+
+	private readonly ImageSource[] favIcons =
+	{
+		ImageSource.FromFile("star_e.png"),
+		ImageSource.FromFile("star_f.png")
+	};
+
+	/// <summary>
+	/// Изображение для кнопки добавления в избранное
+	/// </summary>
+	public ImageSource FavIcon => favManager.CheckIsFavorited(viewingArticle)
+		? favIcons[1]
+		: favIcons[0];
+
+	/// <summary>
+	/// Добавить в избранное/убрать из избранного
+	/// </summary>
+	public Command FavToggleCommand { get; }
+
 	public ArticleViewPage(Article article)
 	{
-		viewingArticle = article;
+		favManager = new FavoritesManager();
+        viewingArticle = article;
+
+		FavToggleCommand = new Command(() =>
+		{
+			if(favManager.CheckIsFavorited(viewingArticle))
+			{
+				favManager.RemoveFromFavorites(viewingArticle);
+			}
+			else
+			{
+				favManager.AddToFavorites(viewingArticle);
+			}
+
+			OnPropertyChanged(nameof(FavIcon));
+		});
+
         InitializeComponent();
+		BindingContext = this;
 	}
 
     protected async override void OnAppearing()
@@ -30,9 +67,17 @@ public partial class ArticleViewPage : ContentPage
             await DisplayRenderedArticle(viewingArticle);
 			isLoaded = true;
 		}
+
+		Shell.Current.FlyoutBehavior = Microsoft.Maui.FlyoutBehavior.Flyout;
     }
 
-	private async Task DisplayRenderedArticle(Article articleToDisplay)
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    {
+        base.OnNavigatedFrom(args);
+        ArticleContentsHelper.DestroyContentsPane();
+    }
+
+    private async Task DisplayRenderedArticle(Article articleToDisplay)
     {
 		// Распарсить и загрузить страницу
         Title = $"{articleToDisplay.Name} - Loading...";
@@ -45,15 +90,15 @@ public partial class ArticleViewPage : ContentPage
 		// Показать панель содержания
 		var selectHandler = new EventHandler<int>(OnParagraphSelected);
 		ArticleContentsHelper.InitializeContentsPane(infoToRender.ParagraphNames, selectHandler);
+
+		// Информация об избранном
+        OnPropertyChanged(nameof(FavIcon));
     }
 
 	// На панели содержимого был выбран раздел
 	private async void OnParagraphSelected(object sender, int idx)
 	{
-		const string BlankUrl = "about:blank";
-
-		string anchorUrl = $"{BlankUrl}#p_{idx}";
-		await ArticleBrowser.EvaluateJavaScriptAsync($"location.href = \"{anchorUrl}\"");
+		await ArticleBrowser.EvaluateJavaScriptAsync($"scrollToChapter({idx})");
 	}
 
     private async void ArticleBrowser_Navigating(object sender, WebNavigatingEventArgs e)
@@ -71,7 +116,6 @@ public partial class ArticleViewPage : ContentPage
 			if(articleToJump != null)
 			{
 				await DisplayRenderedArticle(articleToJump);
-                Console.WriteLine("TEST 2");
             }
 		}
 

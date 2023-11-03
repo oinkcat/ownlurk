@@ -176,10 +176,12 @@ namespace WikiReader
 
         private void VisitTemplateElement(WikiTemplateElement templateElem)
         {
+            // HACK: устанавливает свойство IsInline для некоторых шаблонов
+            var renderer = WikiTemplateRenderer.CreateForTemplate(templateElem);
+
             string tagName = templateElem.IsInline ? "span" : "div";
             WriteStartTag($"{tagName} class=\"template\"");
 
-            var renderer = WikiTemplateRenderer.CreateForTemplate(templateElem);
             renderer.GenerateLayout(outHtmlWriter, this);
 
             WriteEndTag(tagName);

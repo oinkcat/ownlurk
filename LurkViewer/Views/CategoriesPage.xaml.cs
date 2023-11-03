@@ -56,6 +56,7 @@ public partial class CategoriesPage : ContentPage
         if (AllCategories == null)
         {
             await library.Initialize();
+            new FavoritesManager();
             AllCategories = library.Categories;
         }
 

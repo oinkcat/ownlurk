@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:LurkViewer.Views"
              x:Class="LurkViewer.Views.ArticleViewPage"
+             x:DataType="views:ArticleViewPage"
              Title="%ARTICLE_TITLE%">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Избранное"
+                     IconImageSource="{Binding FavIcon}"
+                     Command="{Binding FavToggleCommand}" />
+    </ContentPage.ToolbarItems>
+    
     <Grid>
         <WebView x:Name="ArticleBrowser" Navigating="ArticleBrowser_Navigating" />
     </Grid>

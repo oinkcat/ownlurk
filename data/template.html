@@ -8,8 +8,10 @@
 			}
 			
 			article {
-				width: 1100px;
+				min-width: 360px;
+				max-width: 1100px;
 				margin: auto;
+				line-height: 1.5;
 			}
 			
 			article {
@@ -36,6 +38,13 @@
 				text-indent: 20px;
 			}
 		</style>
+		
+		<script type="text/javascript">
+			function scrollToChapter(idx) {
+				const chapterElem = document.getElementsByName('p_' + idx)[0];
+				chapterElem.scrollIntoView();
+			}
+		</script>
 	</head>
 	<body>
 		<article>

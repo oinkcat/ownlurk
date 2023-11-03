@@ -50,8 +50,6 @@ public partial class ArticlesPage : ContentPage
         SelectedArticle = null;
 		OnPropertyChanged(nameof(SelectedArticle));
 
-        ArticleContentsHelper.DestroyContentsPane();
-
         base.OnNavigatedTo(args);
     }
 

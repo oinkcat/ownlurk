@@ -12,6 +12,8 @@ namespace WikiReader.Templates;
 /// </summary>
 internal abstract class WikiTemplateRenderer
 {
+    private const string LangTemplateNamePrefix = "lang";
+
     private static readonly Dictionary<string, Type> tempatesMap = new() {
         ["цитата"] = typeof(WikiQuoteRenderer),
         ["q"] = typeof(WikiQuoteRenderer),
@@ -34,9 +36,21 @@ internal abstract class WikiTemplateRenderer
     /// <returns>Отрисовщик шаблона</returns>
     public static WikiTemplateRenderer CreateForTemplate(WikiTemplateElement elem)
     {
-        return tempatesMap.TryGetValue(elem.Name.ToLower(), out var rendererType)
-            ? Activator.CreateInstance(rendererType, new[] { elem }) as WikiTemplateRenderer
-            : new WikiCommonTemplateRenderer(elem);
+        string templateName = elem.Name.ToLower();
+
+        if (tempatesMap.TryGetValue(templateName, out var rendererType))
+        {
+            return Activator.CreateInstance(rendererType, new[] { elem }) as WikiTemplateRenderer;
+        }
+        else if(templateName.StartsWith(LangTemplateNamePrefix))
+        {
+            elem.IsInline = true;
+            return new WikiLangRenderer(elem);
+        }
+        else
+        {
+            return new WikiCommonTemplateRenderer(elem);
+        }
     }
 
     public WikiTemplateRenderer(WikiTemplateElement elem)
