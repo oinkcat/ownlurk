@@ -54,7 +54,11 @@ internal class WikiQuoteRenderer : WikiTemplateRenderer
     private void OutputPreFormattedTextQuote(List<WikiElement> content)
     {
         writer.WriteLine("<pre>");
+        visitor.FormatWithParagraphs = false;
+
         OutputGenericQuote(content);
+
+        visitor.FormatWithParagraphs = true;
         writer.WriteLine("</pre>");
     }
 

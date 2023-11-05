@@ -2,10 +2,8 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using WikiReader.Dom;
 using WikiReader.Templates;
-using System.Reflection.Metadata.Ecma335;
 
 namespace WikiReader
 {
@@ -16,10 +14,14 @@ namespace WikiReader
     {
         private readonly TextWriter outHtmlWriter;
 
-        private int chapterIdx = 0;
+        /// <summary>
+        /// Форматировать документ с помощью абзацев
+        /// </summary>
+        public bool FormatWithParagraphs { get; set; }
 
         public HtmlGenerationVisitor(TextWriter writer)
         {
+            FormatWithParagraphs = true;
             outHtmlWriter = writer;
         }
 
@@ -189,9 +191,17 @@ namespace WikiReader
 
         private void VisitParagraphElement(WikiParagraphElement paragraphElem)
         {
-            WriteStartTag("p");
-            VisitElementContent(paragraphElem);
-            WriteEndTag("p");
+            if(FormatWithParagraphs)
+            {
+                WriteStartTag("p");
+                VisitElementContent(paragraphElem);
+                WriteEndTag("p");
+            }
+            else
+            {
+                VisitElementContent(paragraphElem);
+                WriteStartTag("br /", true);
+            }
         }
     }
 }

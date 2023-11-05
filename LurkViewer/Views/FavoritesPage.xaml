@@ -5,18 +5,27 @@
              xmlns:model="clr-namespace:WikiReader.Toc;assembly=WikiReader"
              x:Class="LurkViewer.Views.FavoritesPage"
              x:DataType="views:FavoritesPage"
+             x:Name="Root"
              Title="Избранное">
     <Grid>
         <VerticalStackLayout>
             <ListView HasUnevenRows="True"
-                  ItemsSource="{Binding AllFavorites}"
-                  SelectedItem="{Binding SelectedArticle, Mode=TwoWay}"
-                  CachingStrategy="RecycleElement">
+                      ItemsSource="{Binding AllFavorites}"
+                      SelectedItem="{Binding SelectedArticle, Mode=TwoWay}"
+                      CachingStrategy="RecycleElement">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:Article">
                         <ViewCell>
-                            <Grid Padding="5">
+                            <Grid Padding="5" ColumnDefinitions="*,auto">
                                 <Label Text="{Binding Name}" FontSize="Medium" />
+
+                                <ImageButton Grid.Column="1"
+                                             Margin="2"
+                                             Source="delete.png"
+                                             WidthRequest="24"
+                                             HeightRequest="24"
+                                             Command="{Binding UnFavArticleCommand, Source={Reference Root}}"
+                                             CommandParameter="{Binding}" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

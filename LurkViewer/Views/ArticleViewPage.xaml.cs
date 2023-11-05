@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using WikiReader.Toc;
 using LurkViewer.Services;
@@ -11,7 +12,7 @@ namespace LurkViewer.Views;
 /// </summary>
 public partial class ArticleViewPage : ContentPage
 {
-	private readonly Article viewingArticle;
+	private Article viewingArticle;
 
 	private bool isLoaded;
 
@@ -36,9 +37,9 @@ public partial class ArticleViewPage : ContentPage
 	public Command FavToggleCommand { get; }
 
 	public ArticleViewPage(Article article)
-	{
-		favManager = new FavoritesManager();
+    {
         viewingArticle = article;
+        favManager = new FavoritesManager();
 
 		FavToggleCommand = new Command(() =>
 		{
@@ -64,11 +65,17 @@ public partial class ArticleViewPage : ContentPage
 
 		if(!isLoaded)
 		{
-            await DisplayRenderedArticle(viewingArticle);
+            await DisplayRenderedArticle();
 			isLoaded = true;
 		}
 
-		Shell.Current.FlyoutBehavior = Microsoft.Maui.FlyoutBehavior.Flyout;
+		Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        Shell.Current.FlyoutBehavior = FlyoutBehavior.Disabled;
     }
 
     protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
@@ -77,22 +84,22 @@ public partial class ArticleViewPage : ContentPage
         ArticleContentsHelper.DestroyContentsPane();
     }
 
-    private async Task DisplayRenderedArticle(Article articleToDisplay)
+    private async Task DisplayRenderedArticle()
     {
-		// Распарсить и загрузить страницу
-        Title = $"{articleToDisplay.Name} - Loading...";
+		// Информация об избранном
+        OnPropertyChanged(nameof(FavIcon));
 
-        var infoToRender = await LurkLibrary.Instance.GetRenderedArticle(articleToDisplay);
+        // Распарсить и загрузить страницу
+        Title = $"{viewingArticle.Name} - Loading...";
+
+        var infoToRender = await LurkLibrary.Instance.GetRenderedArticle(viewingArticle);
         ArticleBrowser.Source = new HtmlWebViewSource { Html = infoToRender.RenderedLayout };
 
-        Title = articleToDisplay.Name;
+        Title = viewingArticle.Name;
 
 		// Показать панель содержания
 		var selectHandler = new EventHandler<int>(OnParagraphSelected);
 		ArticleContentsHelper.InitializeContentsPane(infoToRender.ParagraphNames, selectHandler);
-
-		// Информация об избранном
-        OnPropertyChanged(nameof(FavIcon));
     }
 
 	// На панели содержимого был выбран раздел
@@ -115,7 +122,8 @@ public partial class ArticleViewPage : ContentPage
 
 			if(articleToJump != null)
 			{
-				await DisplayRenderedArticle(articleToJump);
+                viewingArticle = articleToJump;
+                await DisplayRenderedArticle();
             }
 		}
 

@@ -15,7 +15,7 @@
     </Shell.FlyoutHeaderTemplate>
 
     <TabBar>
-        <Tab Title="Статьи">
+        <Tab Title="Статьи" Icon="tab_library.png">
             <ShellContent
                 Title="Домой"
                 FlyoutItemIsVisible="False"
@@ -23,7 +23,7 @@
                 Route="MainPage" />
         </Tab>
 
-        <Tab Title="Избранное">
+        <Tab Title="Избранное" Icon="tab_favs.png">
             <ShellContent
                 Title="Избранное"
                 FlyoutItemIsVisible="False"

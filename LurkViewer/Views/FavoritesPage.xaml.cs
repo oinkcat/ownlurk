@@ -21,6 +21,11 @@ public partial class FavoritesPage : ContentPage
 	public IList<Article> AllFavorites => favManager.Favorites;
 
 	/// <summary>
+	/// Команда исключения статьи из списка избранного
+	/// </summary>
+	public Command UnFavArticleCommand { get; }
+
+	/// <summary>
 	/// Выбранная статья
 	/// </summary>
 	public Article SelectedArticle
@@ -45,6 +50,12 @@ public partial class FavoritesPage : ContentPage
 
     public FavoritesPage()
 	{
+		UnFavArticleCommand = new Command((articleParam) =>
+		{
+			favManager.RemoveFromFavorites(articleParam as Article);
+			OnPropertyChanged(nameof(AllFavorites));
+		});
+
 		InitializeComponent();
 		BindingContext = this;
 	}
@@ -63,7 +74,5 @@ public partial class FavoritesPage : ContentPage
 
 		SelectedArticle = null;
 		OnPropertyChanged(nameof(SelectedArticle));
-
-		Shell.Current.FlyoutBehavior = Microsoft.Maui.FlyoutBehavior.Disabled;
     }
 }
