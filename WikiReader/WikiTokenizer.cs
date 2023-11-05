@@ -124,6 +124,7 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
 
             if (matchedTokenType == TokenType.EscapeStart)
             {
+                // Отдельная обработка неразбираемого текста
                 string escapeEnding = escapeEndsMap[tokenText];
                 int escLen = tokenText.Length;
                 int escapeEndIdx = textToTokenize.IndexOf(escapeEnding, i + escLen);
@@ -141,7 +142,9 @@ public class WikiTokenizer : IEnumerator<TokenInfo>
             if (TryExtractPossibleTextMatch(nextMatchIndex, i, out string text))
             {
                 Current = new TokenInfo(text, prevAtEol);
-                next = matchedTokenInfo;
+
+                // Токен за текстом не может быть в начале строки
+                next = matchedTokenInfo with { AtStartOfLine = false };
             }
             else
             {
