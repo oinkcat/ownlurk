@@ -3,9 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:LurkViewer.Views"
              xmlns:model="clr-namespace:WikiReader.Toc;assembly=WikiReader"
+             xmlns:controls="clr-namespace:LurkViewer.Controls"
              x:Class="LurkViewer.Views.CategoriesPage"
              x:DataType="vm:CategoriesPage"
              Title="Содержимое">
+
+    <Shell.SearchHandler>
+        <controls:ArticleSearchHandler ShowsResults="True" 
+                                       Placeholder="Поиск статей"
+                                       SearchBoxVisibility="Collapsible">
+            <controls:ArticleSearchHandler.ItemTemplate>
+                <DataTemplate x:DataType='model:Article'>
+                    <Grid Padding="10">
+                        <Label HorizontalTextAlignment="Start" Text="{Binding Name}" />
+                    </Grid>
+                </DataTemplate>
+            </controls:ArticleSearchHandler.ItemTemplate>
+        </controls:ArticleSearchHandler>
+    </Shell.SearchHandler>
 
     <Grid>
         <ListView HasUnevenRows="True"

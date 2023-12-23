@@ -6,6 +6,7 @@
              x:Class="LurkViewer.Views.ArticlesPage"
              x:DataType="vm:ArticlesPage"
              Title="%CATEGORY_NAME%">
+    
     <Grid>
         <ListView HasUnevenRows="True"
                   ItemsSource="{Binding AllArticles}"

@@ -8,6 +8,7 @@ using WikiReader;
 using WikiReader.Bundle;
 using WikiReader.Toc;
 using LurkViewer.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace LurkViewer.Services
 {
@@ -79,6 +80,8 @@ namespace LurkViewer.Services
                     category.Articles.Remove(name);
                 }
             }
+
+            Categories.RemoveAll(cat => cat.ArticlesCount == 0);
         }
 
         private async Task CacheAssets()
@@ -133,6 +136,30 @@ namespace LurkViewer.Services
             return articleId.HasValue
                 ? new Article { Id = articleId.Value, Name = articleName }
                 : null;
+        }
+
+        /// <summary>
+        /// Выполнить поиск статей по части имени
+        /// </summary>
+        /// <param name="namePart">Часть тмени статьи для поиска</param>
+        /// <returns>Список найденных статей</returns>
+        public IList<Article> SearchArticlesByName(string namePart)
+        {
+            string query = namePart.Trim().ToLower();
+
+            if(query.Length > 2)
+            {
+                return toc.Categories.SelectMany(c => c.Articles)
+                    .Where(kv => kv.Value.Name.ToLower().Contains(query))
+                    .Select(kv => kv.Value)
+                    .DistinctBy(a => a.Id)
+                    .OrderBy(a => a.Name)
+                    .ToList();
+            }
+            else
+            {
+                return Array.Empty<Article>();
+            }
         }
     }
 }

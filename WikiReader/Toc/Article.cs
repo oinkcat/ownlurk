@@ -16,4 +16,10 @@ public class Article
     /// Имя статьи
     /// </summary>
     public string Name { get; set; }
+
+    /// <summary>
+    /// Получить строковое представление статьи
+    /// </summary>
+    /// <returns>Имя статьи</returns>
+    public override string ToString() => Name;
 }

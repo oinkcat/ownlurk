@@ -24,6 +24,12 @@ public class ArticleCategory
     public int ArticlesCount => Articles.Count;
 
     /// <summary>
+    /// Получить строковое представление категории
+    /// </summary>
+    /// <returns>Имя категории</returns>
+    public override string ToString() => Name;
+
+    /// <summary>
     /// Создать информацию о категории
     /// </summary>
     /// <param name="name">Имя новой категории</param>
