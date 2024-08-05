@@ -14,6 +14,14 @@
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
 
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid Padding="10">
+                <Label Text="{Binding Text}" />
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+
     <TabBar>
         <Tab Title="Статьи" Icon="tab_library.png">
             <ShellContent

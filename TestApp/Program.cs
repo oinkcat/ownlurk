@@ -10,6 +10,8 @@ const string TestBundlePath = $"{TestDataDir}/lurk_data.zip";
 const string TestOutFile = $"{TestDataDir}/test_text.html";
 const string TestArticleName = "Виталик";
 
+const string TestOutLinksFile = $"{TestDataDir}/all_links.txt";
+
 const string TemplatePath = $"{TestDataDir}/template.html";
 
 async static Task TestRenderPage(string pageName, ContentBundle bundle)
@@ -35,9 +37,14 @@ async static Task TestRenderPage(string pageName, ContentBundle bundle)
     Console.WriteLine("Converted");
 }
 
-async static Task TestParseAllArticles(ContentBundle bundle)
+async static Task TestParseAllArticlesAndExtractLinks(ContentBundle bundle)
 {
-    Console.WriteLine("Parsing all articles test");
+    Console.WriteLine("Parsing all articles and link extraction test");
+
+    using var linksOutStream = File.CreateText(TestOutLinksFile);
+
+    var toc = new TableOfContents();
+    await toc.LoadFromStream(bundle.GetTocStream());
 
     foreach(int articleId in bundle.GetExistingArticleIds())
     {
@@ -51,7 +58,17 @@ async static Task TestParseAllArticles(ContentBundle bundle)
             var wikiPageParser = new WikiParser(testArticleText);
             wikiPageParser.Parse();
 
-            Console.WriteLine("OK");
+            string articleName = toc.GetArticleNameById(articleId) ?? "-";
+            linksOutStream.WriteLine("* {0}", articleName);
+
+            foreach(var linkElem in wikiPageParser.Links)
+            {
+                if(linkElem is null) { continue; }
+
+                linksOutStream.WriteLine(linkElem.Uri);
+            }
+
+            Console.WriteLine($"OK, # of links: {wikiPageParser.Links.Count}");
         }
         catch(Exception e)
         {
@@ -64,4 +81,4 @@ async static Task TestParseAllArticles(ContentBundle bundle)
 using var lurkDataBundle = new ContentBundle(TestBundlePath);
 
 await TestRenderPage(TestArticleName, lurkDataBundle);
-await TestParseAllArticles(lurkDataBundle);
+await TestParseAllArticlesAndExtractLinks(lurkDataBundle);

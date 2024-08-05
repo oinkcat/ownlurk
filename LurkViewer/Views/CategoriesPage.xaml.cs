@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using WikiReader.Toc;
 using LurkViewer.Services;
+using System.ComponentModel;
 
 namespace LurkViewer.Views;
 

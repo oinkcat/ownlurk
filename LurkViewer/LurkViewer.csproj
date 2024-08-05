@@ -43,13 +43,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\WikiReader\WikiReader.csproj" />
+	  <Compile Remove="Views\CategoriesPage.xaml.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\CategoriesPage.xaml.cs">
-	    <DependentUpon>CategoriesPage.xaml</DependentUpon>
-	  </Compile>
+	  <ProjectReference Include="..\WikiReader\WikiReader.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

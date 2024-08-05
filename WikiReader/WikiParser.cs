@@ -24,10 +24,23 @@ public class WikiParser
     /// </summary>
     public WikiDocument ParsedDocument { get; private set; }
 
+    /// <summary>
+    /// Все ссылки в статье
+    /// </summary>
+    public List<WikiLinkElement> Links { get; }
+
+    /// <summary>
+    /// Все шаблоны в статье
+    /// </summary>
+    public List<WikiTemplateElement> Templates { get; }
+
     public WikiParser(string inputText)
     {
         tokenizer = new WikiTokenizer(inputText);
+
         formatTagsNesting = new();
+        Links = new();
+        Templates = new();
     }
 
     /// <summary>
@@ -40,7 +53,7 @@ public class WikiParser
         ParseArticleText();
         ParsedDocument.Paragraphs = ParsedDocument.Content
             .OfType<WikiHeaderElement>()
-            .Select(he => he.Content.FirstOrDefault().ToString().Trim() ?? "-")
+            .Select(he => he.Content.FirstOrDefault()?.ToString().Trim() ?? "-")
             .ToArray();
     }
     
@@ -86,7 +99,9 @@ public class WikiParser
         }
         else if(token.IsLinkStart)
         {
-            return ParseLinkElement(token.Type == TokenType.ExtLinkStart);
+            var parsedLinkElement = ParseLinkElement(token.Type == TokenType.ExtLinkStart);
+            Links.Add(parsedLinkElement);
+            return parsedLinkElement;
         }
         else if(token.IsFormatting)
         {
@@ -106,7 +121,9 @@ public class WikiParser
         }
         else if(token.IsTemplateStart)
         {
-            return ParseTemplateElement();
+            var parsedTemplateElement = ParseTemplateElement();
+            Templates.Add(parsedTemplateElement);
+            return parsedTemplateElement;
         }
         else
         {

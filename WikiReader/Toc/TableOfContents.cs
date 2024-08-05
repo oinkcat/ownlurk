@@ -13,6 +13,9 @@ public class TableOfContents
     // Индекс для определения идентификатора по имени статьи
     private readonly Dictionary<string, int> index = new();
 
+    // Индекс для определения имени статьи по ее идентификатору
+    private readonly Dictionary<int, string> revIndex = new();
+
     /// <summary>
     /// Список категорий
     /// </summary>
@@ -29,6 +32,7 @@ public class TableOfContents
     public async Task LoadFromStream(Stream tocFileStream)
     {
         index.Clear();
+        revIndex.Clear();
         Categories.Clear();
 
         await Task.Run(() => LoadTocData(tocFileStream));
@@ -66,6 +70,7 @@ public class TableOfContents
                 {
                     currentCategory.AddArticleInfo(articleId, articleName);
                     index.TryAdd(articleName.ToLowerInvariant(), articleId);
+                    revIndex.TryAdd(articleId, articleName.ToLowerInvariant());
                 }
             }
         }
@@ -80,6 +85,18 @@ public class TableOfContents
     {
         return index.TryGetValue(articleName.ToLowerInvariant(), out int articleId)
             ? articleId
+            : null;
+    }
+
+    /// <summary>
+    /// Получить название статьи по ее идентификатору
+    /// </summary>
+    /// <param name="articleId">Идентификатор статьи</param>
+    /// <returns>Название статьи</returns>
+    public string GetArticleNameById(int articleId)
+    {
+        return revIndex.TryGetValue(articleId, out string articleName)
+            ? articleName
             : null;
     }
 }
