@@ -31,6 +31,7 @@
 			blockquote {
 				padding: 5px 2px;
 				border: 1px solid lightgray;
+				margin: 5px 10px;
 			}
 			
 			p {
@@ -40,7 +41,24 @@
 			pre {
 				white-space: pre-wrap;
 				word-wrap: break-word;
+				margin: 0px;
 			}
+
+			/* Scrolling position indicator */
+            .scroll-pos-wrapper {
+                position: fixed;
+                left: 0px;
+                right: 0px;
+                top: 0px;
+                height: 3px;
+                background-color: gray;
+            }
+
+            .scroll-pos-bar {
+                height: 3px;
+                width: 100%;
+                background-color: #F17A00;
+            }
 		</style>
 		
 		<script type="text/javascript">
@@ -48,14 +66,35 @@
 				const chapterElem = document.getElementsByName('p_' + idx)[0];
 				chapterElem.scrollIntoView();
 			}
+
+            window.addEventListener('load', () => {
+                const scrollBar = document.querySelector('.scroll-pos-bar');
+
+                const displayScrollPos = () => {
+                    const fullWidth = document.body.scrollHeight;
+                    const currentScrollBottom = window.scrollY + window.innerHeight;
+
+                    const scrollPercent = currentScrollBottom * 100 / fullWidth;
+                    scrollBar.style.width = Math.round(scrollPercent) + '%';
+                };
+
+                window.addEventListener('resize', displayScrollPos);
+                window.addEventListener('scroll', displayScrollPos);
+
+                displayScrollPos();
+            });
 		</script>
 	</head>
 	<body>
+		<div class="scroll-pos-wrapper">
+			<div class="scroll-pos-bar"></div>
+		</div>
+
 		<article>
 			<h1 class="title">
 				%TITLE%
 			</h1>
-			
+
 			<section>
 				%CONTENT%
 			</section>

@@ -19,7 +19,7 @@ internal abstract class WikiTemplateRenderer
         ["q"] = typeof(WikiQuoteRenderer),
         ["nsfw"] = typeof(WikiSpoilerRenderer),
         ["spoiler"] = typeof(WikiSpoilerRenderer),
-        ["nsfw"] = typeof(WikiSpoilerRenderer),
+        ["acronym"] = typeof(WikiSpoilerRenderer),
     };
 
     protected readonly WikiTemplateElement elem;
@@ -40,7 +40,7 @@ internal abstract class WikiTemplateRenderer
 
         if (tempatesMap.TryGetValue(templateName, out var rendererType))
         {
-            return Activator.CreateInstance(rendererType, new[] { elem }) as WikiTemplateRenderer;
+            return Activator.CreateInstance(rendererType, [elem]) as WikiTemplateRenderer;
         }
         else if(templateName.StartsWith(LangTemplateNamePrefix))
         {
