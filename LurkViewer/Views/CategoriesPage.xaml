@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:LurkViewer.Views"
              xmlns:model="clr-namespace:WikiReader.Toc;assembly=WikiReader"
+             xmlns:idxmodel="clr-namespace:LurkViewer.Models"
              xmlns:controls="clr-namespace:LurkViewer.Controls"
              x:Class="LurkViewer.Views.CategoriesPage"
              x:DataType="vm:CategoriesPage"
+             x:Name="root"
              Title="Содержимое">
-
+    
     <Shell.SearchHandler>
         <controls:ArticleSearchHandler ShowsResults="True" 
                                        Placeholder="Поиск статей"
@@ -22,11 +24,56 @@
         </controls:ArticleSearchHandler>
     </Shell.SearchHandler>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Фильтр"
+                     IconImageSource="{Binding FilterIcon}"
+                     Order="Primary"
+                     Command="{Binding ToggleFilterCommand}" />
+    </ContentPage.ToolbarItems>
+
     <Grid>
+        <ScrollView IsVisible="False">
+            <ScrollView.Triggers>
+                <DataTrigger TargetType="ScrollView" Binding="{Binding IsInIndexView}" Value="true">
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+            </ScrollView.Triggers>
+            
+            <FlexLayout Direction="Row" 
+                        Wrap="Wrap"
+                        AlignContent="Start"
+                        JustifyContent="Start"
+                        AlignItems="Start"
+                        BindableLayout.ItemsSource="{Binding Index}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="idxmodel:AlphabetIndexItem(model:ArticleCategory)">
+                        <Button WidthRequest="60"
+                                HeightRequest="60"
+                                Margin="5"
+                                BackgroundColor="#ccccff"
+                                BorderColor="Gray"
+                                Text="{Binding Letter}"
+                                FontSize="Large"
+                                TextColor="Black"
+                                Command="{Binding AlphabetFilterCommand, Source={x:Reference root}}"
+                                CommandParameter="{Binding Letter}" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </ScrollView>
+        
         <ListView HasUnevenRows="True"
                   ItemsSource="{Binding AllCategories}"
                   SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
-                  CachingStrategy="RecycleElement">
+                  CachingStrategy="RecycleElement"
+                  IsVisible="True">
+            
+            <ListView.Triggers>
+                <DataTrigger TargetType="ListView" Binding="{Binding IsInIndexView}" Value="true">
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </ListView.Triggers>
+            
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:ArticleCategory">
                     <ViewCell>

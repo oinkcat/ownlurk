@@ -8,7 +8,8 @@ using WikiReader;
 using WikiReader.Bundle;
 using WikiReader.Toc;
 using LurkViewer.Models;
-using System.Reflection.Metadata.Ecma335;
+
+using CategoryIndexItem = LurkViewer.Models.AlphabetIndexItem<WikiReader.Toc.ArticleCategory>;
 
 namespace LurkViewer.Services
 {
@@ -21,13 +22,16 @@ namespace LurkViewer.Services
 
         private const string TemplateName = "template.html";
 
-        private readonly string bundleFilePath;
-
         private readonly string templateFilePath;
 
         private ContentBundle bundle;
 
         private TableOfContents toc;
+
+        /// <summary>
+        /// Алфавитный указатель категорий
+        /// </summary>
+        public List<CategoryIndexItem> CategoryIndex { get; private set; }
 
         /// <summary>
         /// Единственный экземпляр
@@ -46,7 +50,6 @@ namespace LurkViewer.Services
 
         private LurkLibrary()
         {
-            bundleFilePath = Path.Combine(FileSystem.CacheDirectory, BundleName);
             templateFilePath = Path.Combine(FileSystem.CacheDirectory, TemplateName);
         }
 
@@ -66,22 +69,10 @@ namespace LurkViewer.Services
             await toc.LoadFromStream(bundle.GetTocStream());
 
             // Отфильтровать только имеющиеся статьи
-            var existingArticleIds = new HashSet<int>(bundle.GetExistingArticleIds());
+            RemoveEmptyArticlesAndCategories();
 
-            foreach(var category in Categories)
-            {
-                var articleNamesToRemove = category.Articles
-                    .Where(a => !existingArticleIds.Contains(a.Value.Id))
-                    .Select(a => a.Key)
-                    .ToArray();
-
-                foreach(string name in articleNamesToRemove)
-                {
-                    category.Articles.Remove(name);
-                }
-            }
-
-            Categories.RemoveAll(cat => cat.ArticlesCount == 0);
+            // Построить алфавитный указатель категорий
+            BuildAlphabetCategoryIndex();
         }
 
         private async Task CacheAssets()
@@ -96,6 +87,43 @@ namespace LurkViewer.Services
                 using var cachedStream = File.Create(cachedFilePath);
                 await assetStream.CopyToAsync(cachedStream);
             }
+        }
+
+        // Удалить статьи с неверными ссылками и пустые категории
+        private void RemoveEmptyArticlesAndCategories()
+        {
+            var existingArticleIds = new HashSet<int>(bundle.GetExistingArticleIds());
+
+            foreach (var category in Categories)
+            {
+                var articleNamesToRemove = category.Articles
+                    .Where(a => !existingArticleIds.Contains(a.Value.Id))
+                    .Select(a => a.Key)
+                    .ToArray();
+
+                foreach (string name in articleNamesToRemove)
+                {
+                    category.Articles.Remove(name);
+                }
+            }
+
+            Categories.RemoveAll(cat => cat.ArticlesCount == 0);
+        }
+
+        // Строит алфавитный список категорий
+        private void BuildAlphabetCategoryIndex()
+        {
+            var indexList = Categories
+                .GroupBy(c => char.ToUpper(c.Name[0]))
+                .Select(g => new CategoryIndexItem(g.Key, [.. g]));
+
+            var nonLetterCategories = indexList
+                .TakeWhile(it => !char.IsLetter(it.Letter))
+                .SelectMany(it => it.Items);
+
+            CategoryIndex = new[] { new CategoryIndexItem('#', [.. nonLetterCategories]) }
+                .Concat(indexList.SkipWhile(it => !char.IsLetter(it.Letter)))
+                .ToList();
         }
 
         /// <summary>

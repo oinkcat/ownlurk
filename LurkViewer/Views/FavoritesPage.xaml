@@ -16,7 +16,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="model:Article">
                         <ViewCell>
-                            <Grid Padding="5" ColumnDefinitions="*,auto">
+                            <Grid Padding="5,10" ColumnDefinitions="*,auto">
                                 <Label Text="{Binding Name}" FontSize="Medium" />
 
                                 <ImageButton Grid.Column="1"
