@@ -19,7 +19,7 @@ internal class WikiCommonTemplateRenderer : WikiTemplateRenderer
 
     public override void GenerateLayout(TextWriter writer, HtmlGenerationVisitor visitor)
     {
-        writer.Write("Unhandled Template: ");
+        writer.Write("Template: ");
         writer.Write(Name);
     }
 }

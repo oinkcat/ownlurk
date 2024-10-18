@@ -15,7 +15,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Article">
                     <ViewCell>
-                        <Grid Padding="5">
+                        <Grid Padding="5,10">
                             <Label Text="{Binding Name}" FontSize="Medium" />
                         </Grid>
                     </ViewCell>
