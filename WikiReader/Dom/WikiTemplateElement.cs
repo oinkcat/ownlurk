@@ -27,7 +27,7 @@ public class WikiTemplateElement : WikiElement
     /// <summary>
     /// Подстановки для шаблона
     /// </summary>
-    public List<Substitution> Substitutions { get; } = new();
+    public List<Substitution> Substitutions { get; set; } = new();
 
     /// <summary>
     /// Является ли заданная подстановка параметром отображения

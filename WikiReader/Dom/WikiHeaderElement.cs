@@ -23,7 +23,7 @@ public class WikiHeaderElement : WikiElement, IWikiContentElement
     /// <summary>
     /// Элементы содержимого
     /// </summary>
-    public List<WikiElement> Content { get; } = new();
+    public List<WikiElement> Content { get; set; } = new();
 
     public override void AcceptHtmlGenerationVisitor(HtmlGenerationVisitor visitor)
     {

@@ -77,7 +77,11 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:ArticleCategory">
                     <ViewCell>
-                        <VerticalStackLayout Spacing="4" Padding="4">
+                        <VerticalStackLayout Spacing="4">
+                            <VerticalStackLayout.Padding>
+                                <OnIdiom Desktop="10,4" Default="4" />
+                            </VerticalStackLayout.Padding>
+                            
                             <Label FontSize="Medium" Text="{Binding Name}" />
 
                             <HorizontalStackLayout Spacing="4">

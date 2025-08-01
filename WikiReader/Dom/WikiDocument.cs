@@ -11,6 +11,11 @@ public class WikiDocument : IWikiContentElement
     private const string DefaultTitle = "Unnamed";
 
     /// <summary>
+    /// Версия разметки документа
+    /// </summary>
+    public const int Version = 0x01;
+
+    /// <summary>
     /// Идентификатор документа
     /// </summary>
     public int Id { get; set; }
@@ -23,7 +28,7 @@ public class WikiDocument : IWikiContentElement
     /// <summary>
     /// Элементы содержимого
     /// </summary>
-    public List<WikiElement> Content { get; }
+    public List<WikiElement> Content { get; set; }
 
     /// <summary>
     /// Абзацы статьи

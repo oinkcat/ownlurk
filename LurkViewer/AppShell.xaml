@@ -4,7 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:LurkViewer.Views"
-    Shell.FlyoutBehavior="Flyout">
+    Shell.FlyoutBehavior="Flyout"
+    Shell.TabBarBackgroundColor="#eeeeee">
 
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
@@ -21,7 +22,7 @@
             </Grid>
         </DataTemplate>
     </Shell.MenuItemTemplate>
-
+    
     <TabBar>
         <Tab Title="Статьи" Icon="tab_library.png">
             <ShellContent

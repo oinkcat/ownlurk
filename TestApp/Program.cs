@@ -7,10 +7,11 @@ using WikiReader.Bundle;
 
 const string TestDataDir = $"../../../../data";
 const string TestBundlePath = $"{TestDataDir}/lurk_data.zip";
-const string TestOutFile = $"{TestDataDir}/test_text.html";
 const string TestArticleName = "Виталик";
 
-const string TestOutLinksFile = $"{TestDataDir}/all_links.txt";
+const string TestOutDir = $"{TestDataDir}/out";
+const string TestOutFile = $"{TestOutDir}/test_text.html";
+const string TestOutLinksFile = $"{TestOutDir}/all_links.txt";
 
 const string TemplatePath = $"{TestDataDir}/template.html";
 
@@ -76,6 +77,11 @@ async static Task TestParseAllArticlesAndExtractLinks(ContentBundle bundle)
             Console.WriteLine(e.Message);
         }
     }
+}
+
+if(!Directory.Exists(TestOutDir))
+{
+    Directory.CreateDirectory(TestOutDir);
 }
 
 using var lurkDataBundle = new ContentBundle(TestBundlePath);

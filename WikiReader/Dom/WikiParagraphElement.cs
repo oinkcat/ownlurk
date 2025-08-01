@@ -9,7 +9,7 @@ namespace WikiReader.Dom;
 public class WikiParagraphElement : WikiElement, IWikiContentElement
 {
     /// <inheritdoc />
-    public List<WikiElement> Content { get; } = new();
+    public List<WikiElement> Content { get; set; } = new();
 
     /// <summary>
     /// Является ли пустым

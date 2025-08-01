@@ -9,8 +9,8 @@ WikiReader/obj
 /.vs
 /LurkViewer/bin
 /LurkViewer/obj
-/data/lurk_data.zip
 /LurkViewer/Resources/Raw/lurk_data.zip
 /WikiReader.Tests/obj
 /WikiReader.Tests/bin
-/data/all_links.txt
+/data/lurk_data.zip
+/data/out/*.*

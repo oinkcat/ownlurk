@@ -11,7 +11,7 @@ public interface IWikiContentElement
     /// <summary>
     /// Содержимое
     /// </summary>
-    List<WikiElement> Content { get; }
+    List<WikiElement> Content { get; set; }
 
     /// <summary>
     /// Добавить содержимое

@@ -92,9 +92,7 @@ namespace LurkViewer.Services
         /// <returns>Статья принадлежит к избранным</returns>
         public bool CheckIsFavorited(Article articleToCheck)
         {
-            return (articleToCheck != null)
-                ? favorites.Contains(articleToCheck)
-                : false;
+            return (articleToCheck != null) && favorites.Contains(articleToCheck);
         }
     }
 }

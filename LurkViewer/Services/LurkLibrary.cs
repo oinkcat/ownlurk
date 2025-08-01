@@ -10,6 +10,7 @@ using WikiReader.Toc;
 using LurkViewer.Models;
 
 using CategoryIndexItem = LurkViewer.Models.AlphabetIndexItem<WikiReader.Toc.ArticleCategory>;
+using WikiReader.Dom;
 
 namespace LurkViewer.Services
 {
@@ -23,6 +24,8 @@ namespace LurkViewer.Services
         private const string TemplateName = "template.html";
 
         private readonly string templateFilePath;
+
+        private readonly ArticleDocumentsCache cache;
 
         private ContentBundle bundle;
 
@@ -50,6 +53,7 @@ namespace LurkViewer.Services
 
         private LurkLibrary()
         {
+            cache = new ArticleDocumentsCache();
             templateFilePath = Path.Combine(FileSystem.CacheDirectory, TemplateName);
         }
 
@@ -133,21 +137,29 @@ namespace LurkViewer.Services
         /// <returns>Информация о статье для вывода</returns>
         public async Task<RenderedArticleInfo> GetRenderedArticle(Article article)
         {
-            using var articleStream = bundle.GetArticleStream(article.Id);
-            using var articleReader = new StreamReader(articleStream);
+            WikiDocument document = await cache.GetAsync(article);
 
-            var parser = new WikiParser(await articleReader.ReadToEndAsync());
-            parser.Parse();
-            parser.ParsedDocument.Title = article.Name;
+            if (document == null)
+            {
+                using var articleStream = bundle.GetArticleStream(article.Id);
+                using var articleReader = new StreamReader(articleStream);
+
+                var parser = new WikiParser(await articleReader.ReadToEndAsync());
+                parser.Parse();
+                document = parser.ParsedDocument;
+                document.Title = article.Name;
+
+                await cache.PutAsync(article, parser.ParsedDocument);
+            }
 
             using var layoutWriter = new StringWriter();
-            var htmlGenerator = new HtmlGenerator(parser.ParsedDocument, templateFilePath);
+            var htmlGenerator = new HtmlGenerator(document, templateFilePath);
             htmlGenerator.Generate(layoutWriter);
 
             return new RenderedArticleInfo
             {
                 Title = article.Name,
-                ParagraphNames = parser.ParsedDocument.Paragraphs,
+                ParagraphNames = document.Paragraphs,
                 RenderedLayout = layoutWriter.ToString()
             };
         }

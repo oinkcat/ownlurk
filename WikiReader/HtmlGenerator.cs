@@ -9,7 +9,7 @@ using WikiReader.Dom;
 namespace WikiReader
 {
     /// <summary>
-    /// Ненерирует разметку HTML из объектов Wiki-разметки
+    /// Генерирует разметку HTML из объектов Wiki-разметки
     /// </summary>
     public class HtmlGenerator
     {

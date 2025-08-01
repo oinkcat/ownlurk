@@ -13,7 +13,7 @@ public class WikiListElement : WikiElement
     /// <summary>
     /// Элементы списка
     /// </summary>
-    public List<List<WikiElement>> ContentItems { get; } = new();
+    public List<List<WikiElement>> ContentItems { get; set; } = new();
 
     /// <summary>
     /// Является нумерованным

@@ -23,7 +23,7 @@ public class WikiFormattedElement : WikiElement, IWikiContentElement
     /// <summary>
     /// Отображаемое содержимое
     /// </summary>
-    public List<WikiElement> Content { get; } = new();
+    public List<WikiElement> Content { get; set; } = new();
 
     /// <summary>
     /// Тип форматирования
